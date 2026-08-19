@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="aurora">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theme, don't fork — live token demo · Digital Ronin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   LAYER 4 · PRIMITIVES (raw values — brand-agnostic)
+   ========================================================= */
+:root{
+  --primitive-neutral-0:#FFFFFF; --primitive-neutral-50:#F4F6F7; --primitive-neutral-100:#E4E9EA;
+  --primitive-neutral-400:#8A9A9D; --primitive-neutral-700:#33403F; --primitive-neutral-900:#101617;
+  --primitive-aurora-300:#8FB8FF; --primitive-aurora-500:#4467D8; --primitive-aurora-600:#2E3F9E; --primitive-aurora-700:#232D6B; --primitive-aurora-acc:#B9F44C;
+  --primitive-ember-300:#FFC29A;  --primitive-ember-500:#E8763C;  --primitive-ember-600:#8E3A1C;  --primitive-ember-700:#4A2117;  --primitive-ember-acc:#FFD25F;
+  --primitive-atlas-300:#7FD8CC;  --primitive-atlas-500:#1F8E82;  --primitive-atlas-600:#14554E;  --primitive-atlas-700:#0C3A36;  --primitive-atlas-acc:#FF7B6B;
+  --primitive-radius-s:6px; --primitive-radius-m:12px; --primitive-radius-pill:999px;
+}
+/* =========================================================
+   LAYER 1 · BRAND MODE  →  LAYER 3 · ALIASES
+   (brand switch remaps alias→primitive; nothing else moves)
+   ========================================================= */
+[data-brand="aurora"]{
+  --alias-brand-300:var(--primitive-aurora-300); --alias-brand-500:var(--primitive-aurora-500);
+  --alias-brand-600:var(--primitive-aurora-600); --alias-brand-700:var(--primitive-aurora-700);
+  --alias-brand-accent:var(--primitive-aurora-acc);
+  --alias-device-angle:-6deg; --alias-radius-cta:var(--primitive-radius-s); --alias-radius-card:10px;
+  --alias-pattern-name:"plus-grid";
+}
+[data-brand="ember"]{
+  --alias-brand-300:var(--primitive-ember-300); --alias-brand-500:var(--primitive-ember-500);
+  --alias-brand-600:var(--primitive-ember-600); --alias-brand-700:var(--primitive-ember-700);
+  --alias-brand-accent:var(--primitive-ember-acc);
+  --alias-device-angle:5deg; --alias-radius-cta:var(--primitive-radius-pill); --alias-radius-card:18px;
+  --alias-pattern-name:"diagonal-dash";
+}
+[data-brand="atlas"]{
+  --alias-brand-300:var(--primitive-atlas-300); --alias-brand-500:var(--primitive-atlas-500);
+  --alias-brand-600:var(--primitive-atlas-600); --alias-brand-700:var(--primitive-atlas-700);
+  --alias-brand-accent:var(--primitive-atlas-acc);
+  --alias-device-angle:0deg; --alias-radius-cta:var(--primitive-radius-m); --alias-radius-card:6px;
+  --alias-pattern-name:"pixel-grid";
+}
+/* =========================================================
+   LAYER 2 · SEMANTICS (meaning — never brand-aware)
+   ========================================================= */
+:root{
+  --semantic-surface-hero:var(--alias-brand-700);
+  --semantic-surface-hero-device:var(--alias-brand-600);
+  --semantic-surface-section:var(--alias-brand-600);
+  --semantic-surface-card:var(--primitive-neutral-0);
+  --semantic-action-primary:var(--alias-brand-accent);
+  --semantic-action-primary-text:var(--primitive-neutral-900);
+  --semantic-action-secondary-border:var(--primitive-neutral-0);
+  --semantic-text-onbrand:var(--primitive-neutral-0);
+  --semantic-text-onbrand-soft:var(--alias-brand-300);
+  --semantic-text-default:var(--primitive-neutral-900);
+  --semantic-text-soft:var(--primitive-neutral-400);
+  --semantic-badge-bg:var(--alias-brand-500);
+  --semantic-focus:var(--alias-brand-accent);
+}
+/* ===== Ronin chrome ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+.chrome{max-width:1280px;margin:0 auto;padding:26px 30px 40px}
+.chrome-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#B8D4D8;text-transform:uppercase}
+.mark .sq{width:12px;height:12px;background:#4AC8E8;flex:none}
+.switcher{display:flex;gap:8px;align-items:center}
+.switcher .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#5A6866;text-transform:uppercase;margin-right:4px}
+.bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 18px;border-radius:999px;border:1px solid #24343433;background:#111517;color:#B8D4D8;cursor:pointer;transition:all .2s}
+.bswitch:hover{border-color:#4AC8E8;color:#fff}
+.bswitch[aria-pressed="true"]{background:#4AC8E8;color:#0A0B0C;border-color:#4AC8E8;font-weight:700}
+.bswitch:focus-visible{outline:2.5px solid #4AC8E8;outline-offset:2px}
+.stagegrid{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
+@media(max-width:1000px){.stagegrid{grid-template-columns:1fr}}
+.stage{background:#101314;border:1px solid #1c2426;border-radius:14px;padding:16px;overflow:hidden;margin-bottom:16px}
+.stage-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#5A6866;text-transform:uppercase;margin:2px 4px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stage-label b{color:#4AC8E8;font-weight:500;white-space:nowrap}
+/* =========================================================
+   COMPONENT · IMAGE HERO — Subtitle(optional)·Title·Description·CTA·Media
+   ========================================================= */
+.image-hero{position:relative;border-radius:10px;overflow:hidden;background:var(--semantic-surface-hero);min-height:320px;display:grid;grid-template-columns:1.12fr .88fr;transition:background .45s ease}
+.image-hero .copy{padding:40px 6px 40px 36px;display:flex;flex-direction:column;justify-content:center;gap:13px;position:relative;z-index:2}
+.image-hero .subtitle{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--semantic-text-onbrand-soft);transition:color .45s}
+.image-hero .title{font-size:clamp(25px,3.2vw,38px);line-height:1.05;font-weight:800;color:var(--semantic-text-onbrand);text-transform:uppercase;letter-spacing:-.01em;max-width:14ch}
+.image-hero .description{font-size:13.5px;color:var(--semantic-text-onbrand);opacity:.82;max-width:34ch}
+.image-hero .cta-row{display:flex;gap:12px;margin-top:6px}
+.image-hero .devicebg{position:absolute;inset:0;z-index:1;pointer-events:none}
+.image-hero .devicebg::before{content:"";position:absolute;top:-20%;bottom:-20%;right:-12%;width:56%;background:var(--semantic-surface-hero-device);transform:skewX(var(--alias-device-angle));transition:background .45s ease,transform .45s ease}
+.image-hero .media{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:22px}
+.image-hero .media svg{width:min(72%,270px);height:auto;filter:drop-shadow(0 16px 28px rgba(0,0,0,.35))}
+/* brand-reactive media: one artwork per mode (asset token) */
+.media .art{display:none}
+[data-brand="aurora"] .art-aurora{display:block}
+[data-brand="ember"]  .art-ember{display:block}
+[data-brand="atlas"]  .art-atlas{display:block}
+.art .a-main{fill:#EAF6F8}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
+.art [class]{transition:fill .45s}
+/* =========================================================
+   COMPONENT · CTA SECTION — pattern-carrier (Image-2 analogue)
+   ========================================================= */
+.cta-section{position:relative;border-radius:10px;overflow:hidden;background:var(--semantic-surface-section);padding:46px 30px;text-align:center;transition:background .45s ease}
+.cta-section .pattern{position:absolute;inset:0;opacity:.28;pointer-events:none;color:var(--alias-brand-300);transition:color .45s}
+.cta-section .pattern svg{width:100%;height:100%}
+.pattern .p{display:none}
+[data-brand="aurora"] .p-aurora{display:block}
+[data-brand="ember"]  .p-ember{display:block}
+[data-brand="atlas"]  .p-atlas{display:block}
+.cta-section .inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
+.cta-section h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;text-transform:uppercase;color:var(--semantic-text-onbrand);letter-spacing:.01em;line-height:1.08}
+.cta-section p{font-size:13px;color:var(--semantic-text-onbrand);opacity:.85;max-width:52ch}
+/* =========================================================
+   COMPONENT · PRODUCT CARD
+   ========================================================= */
+.cardrow{display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start}
+@media(max-width:820px){.cardrow{grid-template-columns:1fr}}
+.product-card{background:var(--semantic-surface-card);border-radius:var(--alias-radius-card);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:border-radius .45s}
+.product-card .pmedia{background:var(--alias-brand-300);height:120px;display:flex;align-items:center;justify-content:center;transition:background .45s;position:relative;overflow:hidden}
+.product-card .pmedia .swoosh{position:absolute;inset:0;background:var(--alias-brand-500);opacity:.35;clip-path:polygon(60% 0,100% 0,100% 100%,40% 100%);transform:skewX(var(--alias-device-angle));transition:all .45s}
+.product-card .pmedia svg{width:64px;height:64px;position:relative;z-index:1}
+.product-card .pbody{padding:16px 18px 18px}
+.product-card h3{font-size:15px;font-weight:700;color:var(--semantic-text-default)}
+.product-card .pdesc{font-size:11.5px;color:var(--semantic-text-soft);margin:4px 0 12px}
+.product-card .prow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.price{font-size:20px;font-weight:800;color:var(--semantic-text-default)}
+.price-was{font-size:12px;color:var(--primitive-neutral-400);text-decoration:line-through}
+.badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;background:var(--semantic-badge-bg);color:var(--primitive-neutral-0);padding:4px 9px;border-radius:999px;transition:background .45s}
+/* ===== atoms ===== */
+.btn{font-family:inherit;font-size:13px;font-weight:600;padding:11px 22px;border-radius:var(--alias-radius-cta);cursor:pointer;border:1.5px solid transparent;transition:all .3s ease;letter-spacing:.02em}
+.btn:focus-visible{outline:2.5px solid var(--semantic-focus);outline-offset:2px}
+.btn-primary{background:var(--semantic-action-primary);color:var(--semantic-action-primary-text)}
+.btn-primary:hover{filter:brightness(1.07)}
+.btn-secondary{background:transparent;color:var(--semantic-text-onbrand);border-color:var(--semantic-action-secondary-border)}
+.btn-secondary:hover{background:rgba(255,255,255,.12)}
+.btn-block{width:100%}
+.atomgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.atom h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#5A6866;text-transform:uppercase;margin-bottom:10px;font-weight:500}
+.btnwrap{background:var(--semantic-surface-hero);border-radius:10px;padding:16px;display:flex;gap:12px;flex-wrap:wrap;transition:background .45s}
+.swatches{display:flex;gap:10px;background:var(--primitive-neutral-50);border-radius:10px;padding:16px}
+.swatch{width:32px;height:32px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;transition:all .25s}
+.swatch.s1{background:var(--alias-brand-700)}.swatch.s2{background:var(--alias-brand-500)}
+.swatch.s3{background:var(--alias-brand-300)}.swatch.s4{background:var(--alias-brand-accent)}
+.swatch[aria-pressed="true"]{border-color:var(--primitive-neutral-900);transform:scale(1.12)}
+/* ===== inspector ===== */
+.inspector{background:#0D1112;border:1px solid #1c2426;border-radius:14px;padding:16px;font-family:'JetBrains Mono',monospace;position:sticky;top:14px}
+.inspector h3{font-size:10px;letter-spacing:.18em;color:#5A6866;text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ovr{color:#4AC8E8;font-size:10px}
+.chain{margin-bottom:12px;border-left:2px solid #1c2426;padding-left:11px}
+.chain .prop{font-size:11px;color:#F5F5F5;font-weight:700;margin-bottom:5px}
+.chain .hop{font-size:10px;color:#8A9A9D;line-height:1.85;display:flex;align-items:center;gap:8px}
+.chain .hop .lvl{color:#5A6866;font-size:9px;width:62px;flex:none;text-transform:uppercase;letter-spacing:.08em}
+.chain .hop .val{color:#B8D4D8}
+.chain .hop .chipdot{width:10px;height:10px;border-radius:3px;flex:none;border:1px solid #ffffff22}
+.chain .hop.final .val{color:#4AC8E8;font-weight:700}
+.pulse{animation:pulse .5s ease}
+@keyframes pulse{0%{background:#4AC8E822}100%{background:transparent}}
+.legend{margin-top:8px;padding-top:10px;border-top:1px solid #1c2426;font-size:9.3px;color:#5A6866;line-height:1.75}
+.legend b{color:#B8D4D8;font-weight:500}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+</style>
+</head>
+<body>
+<div class="chrome">
+  <div class="chrome-head">
+    <div class="mark"><span class="sq"></span>Theme, don't fork · live token demo</div>
+    <div class="switcher" role="group" aria-label="Brand mode">
+      <span class="lbl">Brand mode</span>
+      <button class="bswitch" data-b="aurora" aria-pressed="true">Aurora</button>
+      <button class="bswitch" data-b="ember"  aria-pressed="false">Ember</button>
+      <button class="bswitch" data-b="atlas"  aria-pressed="false">Atlas</button>
+    </div>
+  </div>
+
+  <div class="stagegrid">
+    <div>
+      <!-- IMAGE HERO -->
+      <div class="stage">
+        <div class="stage-label"><span>COMPONENT / IMAGE HERO — Viewport=Desktop · Type=Campaign — Subtitle (optional) · Title · Description · CTA · Media</span><b>0 OVERRIDES</b></div>
+        <section class="image-hero" aria-label="Image hero component">
+          <div class="devicebg" aria-hidden="true"></div>
+          <div class="copy">
+            <p class="subtitle">New for this season</p>
+            <h1 class="title">Find the fit that's right for you</h1>
+            <p class="description">One system underneath. A different brand on top. Same component, zero rework.</p>
+            <div class="cta-row">
+              <button class="btn btn-primary">Explore the range</button>
+              <button class="btn btn-secondary">Learn more</button>
+            </div>
+          </div>
+          <div class="media" aria-hidden="true">
+            <!-- brand-reactive artwork · asset token -->
+            <svg class="art art-aurora" viewBox="0 0 200 200">
+              <!-- isometric cube stack -->
+              <polygon class="a-deep" points="100,26 152,52 100,78 48,52"/>
+              <polygon class="a-mid"  points="48,52 100,78 100,134 48,108"/>
+              <polygon class="a-main" points="152,52 100,78 100,134 152,108"/>
+              <polygon class="a-deep" points="100,86 144,108 100,130 56,108" opacity=".55"/>
+              <polygon class="a-acc"  points="100,118 136,136 100,154 64,136"/>
+              <polygon class="a-mid"  points="64,136 100,154 100,182 64,164"/>
+              <polygon class="a-main" points="136,136 100,154 100,182 136,164"/>
+            </svg>
+            <svg class="art art-ember" viewBox="0 0 200 200">
+              <!-- rocket -->
+              <ellipse class="a-deep" cx="100" cy="168" rx="52" ry="14"/>
+              <path class="a-main" d="M100 22 C120 48 124 92 112 128 L88 128 C76 92 80 48 100 22 Z"/>
+              <circle class="a-acc" cx="100" cy="74" r="12"/>
+              <path class="a-mid" d="M88 108 L64 140 L88 132 Z"/>
+              <path class="a-mid" d="M112 108 L136 140 L112 132 Z"/>
+              <path class="a-acc" d="M94 132 L106 132 L100 158 Z"/>
+            </svg>
+            <svg class="art art-atlas" viewBox="0 0 200 200">
+              <!-- isometric ring -->
+              <ellipse class="a-deep" cx="100" cy="120" rx="64" ry="38"/>
+              <ellipse class="a-main" cx="100" cy="104" rx="64" ry="38"/>
+              <ellipse class="a-deep" cx="100" cy="104" rx="30" ry="17"/>
+              <path class="a-acc" d="M148 78 A64 38 0 0 1 164 104 L134 104 A30 17 0 0 0 127 91 Z"/>
+              <ellipse class="a-mid" cx="100" cy="120" rx="30" ry="17" opacity=".5"/>
+            </svg>
+          </div>
+        </section>
+      </div>
+
+      <!-- CTA SECTION · pattern carrier -->
+      <div class="stage">
+        <div class="stage-label"><span>COMPONENT / CTA SECTION — brand pattern device is a token</span><b id="patname">pattern: plus-grid</b></div>
+        <section class="cta-section" aria-label="CTA section component">
+          <div class="pattern" aria-hidden="true">
+            <svg class="p p-aurora" preserveAspectRatio="xMidYMid slice">
+              <defs><pattern id="pgA" width="56" height="56" patternUnits="userSpaceOnUse">
+                <path d="M28 20 v16 M20 28 h16" stroke="currentColor" stroke-width="2.4" fill="none"/>
+              </pattern></defs>
+              <rect width="100%" height="100%" fill="url(#pgA)"/>
+            </svg>
+            <svg class="p p-ember" preserveAspectRatio="xMidYMid slice">
+              <defs><pattern id="pgB" width="52" height="52" patternUnits="userSpaceOnUse">
+                <path d="M8 44 L20 32 M32 20 L44 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+              </pattern></defs>
+              <rect width="100%" height="100%" fill="url(#pgB)"/>
+            </svg>
+            <svg class="p p-atlas" preserveAspectRatio="xMidYMid slice">
+              <defs><pattern id="pgC" width="48" height="48" patternUnits="userSpaceOnUse">
+                <rect x="18" y="18" width="7" height="7" fill="currentColor"/>
+                <rect x="38" y="4" width="4.5" height="4.5" fill="currentColor" opacity=".6"/>
+                <rect x="4" y="38" width="4.5" height="4.5" fill="currentColor" opacity=".6"/>
+              </pattern></defs>
+              <rect width="100%" height="100%" fill="url(#pgC)"/>
+            </svg>
+          </div>
+          <div class="inner">
+            <h2>Discover what fits you</h2>
+            <p>The same section, three brands. The background device — the pattern itself — resolves from a token, exactly like a colour.</p>
+            <button class="btn btn-primary">Discover the range</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- PRODUCT CARD + ATOMS -->
+      <div class="stage">
+        <div class="stage-label"><span>COMPONENT / PRODUCT CARD &nbsp;·&nbsp; ATOMS</span></div>
+        <div class="cardrow">
+          <article class="product-card" aria-label="Product card component">
+            <div class="pmedia"><div class="swoosh"></div>
+              <svg viewBox="0 0 200 200" class="art art-static">
+                <polygon fill="#ffffff" points="100,40 148,64 100,88 52,64"/>
+                <polygon fill="#ffffffAA" points="52,64 100,88 100,148 52,124"/>
+                <polygon fill="#ffffffDD" points="148,64 100,88 100,148 148,124"/>
+              </svg>
+            </div>
+            <div class="pbody">
+              <h3>Starter kit</h3>
+              <p class="pdesc">Everything to begin — one device, two refills.</p>
+              <div class="prow"><span class="price">£24</span><span class="price-was">£39</span><span class="badge">Intro offer</span></div>
+              <button class="btn btn-primary btn-block">Add to basket</button>
+            </div>
+          </article>
+          <div class="atomgrid">
+            <div class="atom"><h4>Button</h4>
+              <div class="btnwrap">
+                <button class="btn btn-primary">Primary</button>
+                <button class="btn btn-secondary">Secondary</button>
+              </div>
+            </div>
+            <div class="atom"><h4>Swatch selector</h4>
+              <div class="swatches">
+                <button class="swatch s1" aria-pressed="true" aria-label="shade 700"></button>
+                <button class="swatch s2" aria-pressed="false" aria-label="shade 500"></button>
+                <button class="swatch s3" aria-pressed="false" aria-label="shade 300"></button>
+                <button class="swatch s4" aria-pressed="false" aria-label="accent"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="inspector" aria-label="Token inspector">
+      <h3>Token inspector <span class="ovr" id="modename">mode: aurora</span></h3>
+      <div class="chain">
+        <div class="prop">hero.surface</div>
+        <div class="hop"><span class="lvl">semantic</span><span class="val">color.surface.hero</span></div>
+        <div class="hop"><span class="lvl">alias</span><span class="val">brand.700</span></div>
+        <div class="hop final"><span class="lvl">primitive</span><span class="chipdot" data-var="--alias-brand-700"></span><span class="val" data-res="--alias-brand-700"></span></div>
+      </div>
+      <div class="chain">
+        <div class="prop">cta.primary.background</div>
+        <div class="hop"><span class="lvl">semantic</span><span class="val">color.action.primary</span></div>
+        <div class="hop"><span class="lvl">alias</span><span class="val">brand.accent</span></div>
+        <div class="hop final"><span class="lvl">primitive</span><span class="chipdot" data-var="--alias-brand-accent"></span><span class="val" data-res="--alias-brand-accent"></span></div>
+      </div>
+      <div class="chain">
+        <div class="prop">section.pattern <span style="color:#5A6866">· visual device</span></div>
+        <div class="hop"><span class="lvl">semantic</span><span class="val">pattern.surface.brand</span></div>
+        <div class="hop final"><span class="lvl">alias</span><span class="val" data-res-raw="--alias-pattern-name"></span></div>
+      </div>
+      <div class="chain">
+        <div class="prop">hero.media <span style="color:#5A6866">· asset token</span></div>
+        <div class="hop"><span class="lvl">semantic</span><span class="val">asset.hero.campaign</span></div>
+        <div class="hop final"><span class="lvl">alias</span><span class="val" id="assetname">brand.art.aurora</span></div>
+      </div>
+      <div class="chain">
+        <div class="prop">cta.radius / card.radius</div>
+        <div class="hop"><span class="lvl">alias</span><span class="val">brand.shape.cta · brand.shape.card</span></div>
+        <div class="hop final"><span class="lvl">value</span><span class="val"><span data-res-raw="--alias-radius-cta"></span> · <span data-res-raw="--alias-radius-card"></span></span></div>
+      </div>
+      <div class="legend">
+        Six layers: <b>brand → semantic → alias → primitive → component → pattern</b>.<br>
+        One switch remaps <b>alias → primitive</b>: colour, shape, pattern device, even the artwork. Components never change — <b>0 overrides, by construction.</b>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  const buttons=[...document.querySelectorAll('.bswitch')];
+  function resolveVar(n){ return getComputedStyle(root).getPropertyValue(n).trim().replace(/^"|"$/g,''); }
+  function refresh(){
+    document.querySelectorAll('[data-res]').forEach(el=>{ el.textContent=resolveVar(el.getAttribute('data-res'))||'—'; });
+    document.querySelectorAll('[data-res-raw]').forEach(el=>{ el.textContent=resolveVar(el.getAttribute('data-res-raw'))||'—'; });
+    document.querySelectorAll('.chipdot').forEach(el=>{ el.style.background=resolveVar(el.getAttribute('data-var')); });
+    const mode=root.getAttribute('data-brand');
+    document.getElementById('modename').textContent='mode: '+mode;
+    document.getElementById('patname').textContent='pattern: '+resolveVar('--alias-pattern-name');
+    document.getElementById('assetname').textContent='brand.art.'+mode;
+  }
+  buttons.forEach(b=>b.addEventListener('click',()=>{
+    root.setAttribute('data-brand', b.dataset.b);
+    buttons.forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+    refresh();
+    document.querySelectorAll('.chain').forEach(c=>{c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');});
+  }));
+  const sw=[...document.querySelectorAll('.swatch')];
+  sw.forEach(s=>s.addEventListener('click',()=>sw.forEach(x=>x.setAttribute('aria-pressed',String(x===s)))));
+  addEventListener('keydown',e=>{
+    const map={'1':'aurora','2':'ember','3':'atlas'};
+    if(map[e.key]){ const btn=buttons.find(b=>b.dataset.b===map[e.key]); btn && btn.click(); }
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
