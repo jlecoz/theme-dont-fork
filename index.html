@@ -216,7 +216,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
    ========================================================= */
 .cardrow{display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start}
 @media(max-width:820px){.cardrow{grid-template-columns:1fr}}
-.product-card{background:var(--semantic-surface-card);border-radius:var(--alias-radius-card);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:border-radius .45s}
+.product-card{display:flex;flex-direction:column;background:var(--semantic-surface-card);border-radius:var(--alias-radius-card);overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.28);transition:border-radius .45s}
 .product-card .pmedia{background:var(--alias-brand-300);height:138px;display:flex;align-items:center;justify-content:center;transition:background .45s;position:relative;overflow:hidden}
 .product-card .pmedia .swoosh{position:absolute;top:-25%;bottom:-25%;right:-14%;width:62%;background:var(--alias-brand-600);transform:skewX(var(--alias-device-angle));transition:background .45s,transform .45s}
 .product-card .pmedia svg{width:88px;height:88px;position:relative;z-index:1}
@@ -226,9 +226,9 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 [data-brand="atlas"] .pmedia .p-atlas{display:block}
 .pmedia .m-main{fill:#FFFFFF}.pmedia .m-mid{fill:var(--alias-brand-300)}.pmedia .m-deep{fill:var(--alias-brand-700)}.pmedia .m-acc{fill:var(--alias-brand-accent)}
 .pmedia svg [class]{transition:fill .45s}
-.product-card .pbody{padding:16px 18px 18px}
+.product-card .pbody{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
 .product-card h3{font-family:var(--semantic-font-display);font-size:15px;font-weight:700;color:var(--semantic-text-default)}
-.product-card .pdesc{font-size:11.5px;color:var(--semantic-text-soft);margin:4px 0 12px}
+.product-card .pdesc{flex:1;font-size:11.5px;color:var(--semantic-text-soft);margin:4px 0 12px}
 .product-card .prow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .price{font-size:20px;font-weight:800;color:var(--semantic-text-default)}
 .price-was{font-size:12px;color:var(--primitive-neutral-400);text-decoration:line-through}
