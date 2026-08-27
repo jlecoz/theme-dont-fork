@@ -1,0 +1,15 @@
+{
+  "name": "theme-dont-fork",
+  "version": "1.0.0",
+  "description": "One component library, three brands, zero overrides — with guardrails that make it structural.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "guard:tokens": "node scripts/check-tokens.mjs",
+    "guard:a11y": "node scripts/check-a11y.mjs",
+    "guard": "npm run guard:tokens && npm run guard:a11y"
+  },
+  "devDependencies": {
+    "node-html-parser": "^6.1.13"
+  }
+}

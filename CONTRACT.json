@@ -6,6 +6,21 @@
     "layers": ["brand (data-brand attribute)", "semantic (--semantic-*)", "alias (--alias-*)", "primitive (--primitive-*)"],
     "motionPrimitives": "Global, non-brand-scoped constants (--dur-*, --ease-*, --dist-*, --stagger, --seq). Motion does not vary by brand in this system — this is a deliberate 4th category, not a taxonomy gap. See Phase 1 spec for the reasoning."
   },
+  "boundary": {
+    "note": "The 'tokens only, zero overrides' contract governs the COMPONENT LIBRARY — the reusable system being sold. It does NOT govern the demo harness (the browser-chrome mockup, the token inspector, the stage scaffolding) that exists to SHOW the system. Holding the harness to the contract is a category error. This boundary is declared here so the guardrail reads it from the contract rather than guessing. Drawing this line explicitly is itself the senior distinction — a design system is a bounded, governed contract with a defined edge, not 'all the CSS in the file'.",
+    "systemSelectorPrefixes": [
+      ".image-hero", ".cta-section", ".product-card", ".cardrow",
+      ".btn", ".badge", ".tg", ".tgrow", ".tglabel", ".ctrl", ".swatch",
+      ".btnwrap", ".swatches", ".toast", ".atomgrid", ".atom", ".cbox",
+      ".art", ".pmedia", ".media", ".pattern"
+    ],
+    "harnessSelectorPrefixes": [
+      "body", ".chrome", ".mark", ".switcher", ".bswitch", ".stage",
+      ".stage-label", ".step", ".ramp", ".swatches", ".tscale", ".sbar",
+      ".rampnote", ".inspector", ".ovr", ".chain", ".legend", ".cbox .clabel", ".atom h4"
+    ],
+    "harnessException": "The harness may use raw hex — it is presentation scaffolding, not part of the token-governed system. Its accessibility is still checked separately (Phase 3 fixed a real AA failure in it), but it is exempt from the token-consumption rule."
+  },
   "globalRules": {
     "never": [
       "Never reference a --primitive-* token directly inside a component rule. Components read --semantic-* or --alias-* only — that indirection is what makes zero-override theming structural rather than disciplined.",

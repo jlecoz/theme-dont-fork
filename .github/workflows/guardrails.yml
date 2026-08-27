@@ -1,0 +1,29 @@
+name: Design System Guardrails
+
+# Runs on every push and every PR — the same gate whether a human or an AI agent
+# opened the change. This is what makes "by construction" real: a token violation or
+# a contrast regression cannot merge, regardless of who (or what) authored it.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Token guardrail — component library consumes tokens, never raw values
+        run: node scripts/check-tokens.mjs
+
+      - name: Accessibility guardrail — every text pair clears WCAG AA
+        run: node scripts/check-a11y.mjs

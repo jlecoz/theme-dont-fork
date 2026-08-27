@@ -84,6 +84,7 @@
   --semantic-surface-hero-device:var(--alias-brand-600);
   --semantic-surface-section:var(--alias-brand-600);
   --semantic-surface-card:var(--primitive-neutral-0);
+  --semantic-art-base:var(--primitive-neutral-0); /* Phase 3: base fill for per-brand SVG artwork — was hardcoded #EAF6F8/#FFFFFF */
   --semantic-action-primary:var(--alias-brand-accent);
   --semantic-action-primary-text:var(--primitive-neutral-900);
   /* invert: background and text exchange roles */
@@ -131,7 +132,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .mark{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#B8D4D8;text-transform:uppercase}
 .mark .sq{width:12px;height:12px;background:#4AC8E8;flex:none}
 .switcher{display:flex;gap:8px;align-items:center}
-.switcher .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#5A6866;text-transform:uppercase;margin-right:4px}
+.switcher .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E8E90;text-transform:uppercase;margin-right:4px}
 .bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 18px;border-radius:999px;border:1px solid #24343433;background:#111517;color:#B8D4D8;cursor:pointer;transition:background .2s,color .2s,border-color .2s,padding .28s var(--ease-reveal),font-size .28s var(--ease-reveal)}
 .bswitch:hover{border-color:#4AC8E8;color:#fff}
 .bswitch[aria-pressed="true"]{background:#4AC8E8;color:#0A0B0C;border-color:#4AC8E8;font-weight:700}
@@ -139,7 +140,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .stagegrid{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
 @media(max-width:1000px){.stagegrid{grid-template-columns:1fr}}
 .stage{background:#101314;border:1px solid #1c2426;border-radius:14px;padding:16px;overflow:hidden;margin-bottom:16px}
-.stage-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#5A6866;text-transform:uppercase;margin:2px 4px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stage-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E8E90;text-transform:uppercase;margin:2px 4px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .stage-label b{color:#4AC8E8;font-weight:500;white-space:nowrap}
 /* =========================================================
    COMPONENT · IMAGE HERO — Subtitle(optional)·Title·Description·CTA·Media
@@ -159,7 +160,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 [data-brand="aurora"] .art-aurora{display:block}
 [data-brand="ember"]  .art-ember{display:block}
 [data-brand="atlas"]  .art-atlas{display:block}
-.art .a-main{fill:#EAF6F8}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
+.art .a-main{fill:var(--semantic-art-base)}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
 .art [class]{transition:fill .45s}
 /* Aurora: the lower cube slides up into the upper one, then settles */
 @keyframes cubeLift{
@@ -229,7 +230,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 [data-brand="aurora"] .pmedia .p-aurora{display:block}
 [data-brand="ember"] .pmedia .p-ember{display:block}
 [data-brand="atlas"] .pmedia .p-atlas{display:block}
-.pmedia .m-main{fill:#FFFFFF}.pmedia .m-mid{fill:var(--alias-brand-300)}.pmedia .m-deep{fill:var(--alias-brand-700)}.pmedia .m-acc{fill:var(--alias-brand-accent)}
+.pmedia .m-main{fill:var(--semantic-art-base)}.pmedia .m-mid{fill:var(--alias-brand-300)}.pmedia .m-deep{fill:var(--alias-brand-700)}.pmedia .m-acc{fill:var(--alias-brand-accent)}
 .pmedia svg [class]{transition:fill .45s}
 .product-card .pbody{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
 .product-card h3{font-family:var(--semantic-font-display);font-size:15px;font-weight:700;color:var(--semantic-text-default)}
@@ -248,7 +249,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .btn-secondary:hover{background:var(--semantic-action-secondary-hover-bg);color:var(--semantic-action-secondary-hover-text);border-color:var(--semantic-action-secondary-hover-bg);transform:translateY(-1px)}
 .btn-block{width:100%}
 .atomgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.atom h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#5A6866;text-transform:uppercase;margin-bottom:10px;font-weight:500}
+.atom h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E8E90;text-transform:uppercase;margin-bottom:10px;font-weight:500}
 .btnwrap{background:var(--semantic-surface-hero);border-radius:10px;padding:16px;display:flex;gap:12px;flex-wrap:wrap;transition:background .45s}
 .swatches{background:var(--primitive-neutral-50);border-radius:10px;padding:13px 13px 9px}
 .ramp{display:flex;gap:4px;align-items:flex-end}
@@ -274,7 +275,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .toast .tprog i{display:block;height:100%;background:var(--semantic-feedback-success);transform-origin:left;animation:toastTimer 5s linear infinite}
 @keyframes toastTimer{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 .toast .tdot{width:17px;height:17px;border-radius:50%;background:var(--semantic-feedback-success);flex:0 0 auto;margin-top:1px;position:relative}
-.toast .tdot:after{content:"";position:absolute;left:6px;top:4px;width:4px;height:7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.toast .tdot:after{content:"";position:absolute;left:6px;top:4px;width:4px;height:7px;border:solid var(--primitive-neutral-0);border-width:0 2px 2px 0;transform:rotate(42deg)}
 .toast .tbody{font-family:var(--semantic-font-body);font-size:11.5px;color:var(--primitive-neutral-900);line-height:1.45}
 .toast .tbody b{display:block;font-weight:700;margin-bottom:2px}
 /* --- toggle --- */
@@ -340,18 +341,18 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .swatch[aria-pressed="true"]{border-color:var(--primitive-neutral-900);transform:scale(1.12)}
 /* ===== inspector ===== */
 .inspector{background:#0D1112;border:1px solid #1c2426;border-radius:14px;padding:16px;font-family:'JetBrains Mono',monospace;position:sticky;top:14px}
-.inspector h3{font-size:10px;letter-spacing:.18em;color:#5A6866;text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.inspector h3{font-size:10px;letter-spacing:.18em;color:#7E8E90;text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
 .ovr{color:#4AC8E8;font-size:10px}
 .chain{margin-bottom:12px;border-left:2px solid #1c2426;padding-left:11px}
 .chain .prop{font-size:11px;color:#F5F5F5;font-weight:700;margin-bottom:5px}
 .chain .hop{font-size:10px;color:#8A9A9D;line-height:1.85;display:flex;align-items:center;gap:8px}
-.chain .hop .lvl{color:#5A6866;font-size:9px;width:62px;flex:none;text-transform:uppercase;letter-spacing:.08em}
+.chain .hop .lvl{color:#7E8E90;font-size:9px;width:62px;flex:none;text-transform:uppercase;letter-spacing:.08em}
 .chain .hop .val{color:#B8D4D8}
 .chain .hop .chipdot{width:10px;height:10px;border-radius:3px;flex:none;border:1px solid #ffffff22}
 .chain .hop.final .val{color:#4AC8E8;font-weight:700}
 .pulse{animation:pulse .5s ease}
 @keyframes pulse{0%{background:#4AC8E822}100%{background:transparent}}
-.legend{margin-top:8px;padding-top:10px;border-top:1px solid #1c2426;font-size:9.3px;color:#5A6866;line-height:1.75}
+.legend{margin-top:8px;padding-top:10px;border-top:1px solid #1c2426;font-size:9.3px;color:#7E8E90;line-height:1.75}
 .legend b{color:#B8D4D8;font-weight:500}
 @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} }
 </style>
@@ -601,17 +602,17 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
         <div class="hop final"><span class="lvl">hover text</span><span class="chipdot" data-var="--alias-brand-accent"></span><span class="val">invert of rest</span></div>
       </div>
       <div class="chain">
-        <div class="prop">section.pattern <span style="color:#5A6866">· visual device</span></div>
+        <div class="prop">section.pattern <span style="color:#7E8E90">· visual device</span></div>
         <div class="hop"><span class="lvl">semantic</span><span class="val">pattern.surface.brand</span></div>
         <div class="hop final"><span class="lvl">alias</span><span class="val" data-res-raw="--alias-pattern-name"></span></div>
       </div>
       <div class="chain">
-        <div class="prop">hero.media <span style="color:#5A6866">· asset token</span></div>
+        <div class="prop">hero.media <span style="color:#7E8E90">· asset token</span></div>
         <div class="hop"><span class="lvl">semantic</span><span class="val">asset.hero.campaign</span></div>
         <div class="hop final"><span class="lvl">alias</span><span class="val" id="assetname">brand.art.aurora</span></div>
       </div>
       <div class="chain">
-        <div class="prop">type.display <span style="color:#5A6866">· family + optical scale</span></div>
+        <div class="prop">type.display <span style="color:#7E8E90">· family + optical scale</span></div>
         <div class="hop"><span class="lvl">semantic</span><span class="val">font.display</span></div>
         <div class="hop"><span class="lvl">alias</span><span class="val" id="fontname">Inter</span></div>
         <div class="hop final"><span class="lvl">scale</span><span class="val" data-res-raw="--alias-type-scale"></span></div>
