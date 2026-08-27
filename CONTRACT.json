@@ -1,0 +1,91 @@
+{
+  "system": "theme-dont-fork",
+  "version": "phase-2-2026-08-27",
+  "sourceOfTruth": "index.html is canonical. No design tool file exists for this project — there is nothing else to reconcile against.",
+  "architecture": {
+    "layers": ["brand (data-brand attribute)", "semantic (--semantic-*)", "alias (--alias-*)", "primitive (--primitive-*)"],
+    "motionPrimitives": "Global, non-brand-scoped constants (--dur-*, --ease-*, --dist-*, --stagger, --seq). Motion does not vary by brand in this system — this is a deliberate 4th category, not a taxonomy gap. See Phase 1 spec for the reasoning."
+  },
+  "globalRules": {
+    "never": [
+      "Never reference a --primitive-* token directly inside a component rule. Components read --semantic-* or --alias-* only — that indirection is what makes zero-override theming structural rather than disciplined.",
+      "Never reference a brand name (aurora/ember/atlas) inside a component selector, EXCEPT the existing [data-brand=\"...\"] asset-visibility blocks, which exist specifically to swap per-brand SVG artwork and pattern devices. That exception is documented and closed — do not extend the pattern to anything else.",
+      "Never hardcode a hex colour value inside a component rule. All colour must resolve through a token, full stop.",
+      "Never introduce a new --semantic-* token without: (1) adding it to this contract, (2) computing its WCAG contrast ratio against every background it will realistically sit on, (3) confirming it clears 4.5:1 for text usage or 3:1 for non-text UI components per WCAG 1.4.11.",
+      "Never invent a new variant-naming convention. Every existing variant in this codebase uses a modifier class following the pattern `.component-variantname` (see btn-primary/btn-secondary). New variants must follow the same convention."
+    ],
+    "always": [
+      "New interactive components must include :focus-visible using var(--semantic-focus), matching every existing interactive element in this file.",
+      "New interactive components with a checked/pressed state must use aria-checked or aria-pressed, matching .ctrl and .bswitch.",
+      "Any new animation must respect prefers-reduced-motion — add the selector to the existing @media (prefers-reduced-motion:reduce) block, do not create a second one."
+    ]
+  },
+  "components": {
+    "image-hero": {
+      "selector": ".image-hero",
+      "purpose": "Primary hero band. Subtitle (optional) / Title / Description / CTA row / per-brand media.",
+      "slots": [".copy", ".subtitle", ".title", ".description", ".cta-row", ".devicebg", ".media"],
+      "tokensUsed": ["alias-radius-section", "alias-corner-shape", "semantic-surface-hero", "semantic-surface-hero-device", "alias-device-angle", "semantic-text-onbrand", "semantic-text-onbrand-soft", "semantic-font-display", "semantic-font-body", "alias-type-scale", "alias-leading-display", "alias-weight-display", "alias-transform-display", "alias-tracking-display"],
+      "perBrandAssets": "SVG art swapped via [data-brand] + .art-{brand} visibility toggle — the one sanctioned exception to the no-brand-name rule.",
+      "variants": "none currently — single fixed layout"
+    },
+    "cta-section": {
+      "selector": ".cta-section",
+      "purpose": "Pattern-carrier band. Heading + supporting text over a per-brand background device.",
+      "slots": [".pattern", ".inner", "h2", "p"],
+      "tokensUsed": ["alias-radius-section", "alias-corner-shape", "semantic-surface-section", "alias-brand-300", "semantic-font-display", "semantic-font-body", "semantic-text-onbrand", "alias-type-scale", "alias-weight-display", "alias-transform-display", "alias-tracking-display", "alias-leading-display"],
+      "perBrandAssets": "background pattern swapped via [data-brand] + .p-{brand} visibility toggle — same sanctioned exception as image-hero.",
+      "variants": "none currently"
+    },
+    "product-card": {
+      "selector": ".product-card",
+      "purpose": "Product summary card — media, title, description, price row, badge, CTA.",
+      "slots": [".pmedia", ".pbody", "h3", ".pdesc", ".prow", ".price", ".price-was", ".badge"],
+      "tokensUsed": ["semantic-surface-card", "alias-radius-card", "alias-corner-shape", "alias-brand-300", "alias-brand-600", "alias-brand-700", "alias-brand-accent", "alias-device-angle", "semantic-font-display", "semantic-text-default", "semantic-text-soft", "semantic-badge-bg", "primitive-neutral-0", "primitive-neutral-400"],
+      "note": "price-was uses primitive-neutral-400 directly — a pre-existing exception for a struck-through/de-emphasised price, not a violation of the semantic-only rule since it never carries brand meaning. Flagged here so an agent doesn't treat it as a bug to 'fix'.",
+      "variants": "none currently"
+    },
+    "btn": {
+      "selector": ".btn",
+      "purpose": "Primary interactive action element. The established variant-modifier precedent for the whole system.",
+      "variants": {
+        "btn-primary": "background: semantic-action-primary, hover swaps to semantic-action-primary-hover-bg",
+        "btn-secondary": "transparent background, border from semantic-action-secondary-border",
+        "btn-block": "width:100% modifier, combinable with either variant above"
+      },
+      "tokensUsed": ["alias-radius-cta", "alias-corner-shape", "semantic-font-body", "semantic-focus", "semantic-action-primary", "semantic-action-primary-text", "semantic-action-primary-hover-bg", "semantic-action-primary-hover-text", "semantic-action-secondary-border", "semantic-action-secondary-hover-bg", "semantic-action-secondary-hover-text"],
+      "a11y": "focus-visible with semantic-focus outline — present and correct."
+    },
+    "badge": {
+      "selector": ".badge",
+      "purpose": "Small status/label chip.",
+      "tokensUsed": ["alias-corner-shape", "semantic-badge-bg", "primitive-neutral-0"],
+      "variants": "none currently — single style"
+    },
+    "toggle": {
+      "selector": ".tg",
+      "purpose": "Binary on/off control.",
+      "tokensUsed": ["alias-brand-200", "alias-brand-500"],
+      "a11y": "uses aria-checked — correct pattern to follow for any new stateful control.",
+      "variants": "none"
+    },
+    "checkbox-radio": {
+      "selector": ".ctrl (.cb for checkbox, .rb for radio)",
+      "purpose": "Shared base control, differentiated by modifier class — this is a second real variant precedent alongside btn.",
+      "tokensUsed": ["alias-brand-400", "alias-brand-500", "alias-radius-card", "alias-corner-shape", "primitive-neutral-0"],
+      "a11y": "uses aria-checked — correct."
+    },
+    "swatch": {
+      "selector": ".swatch",
+      "purpose": "Colour/pattern selector circle.",
+      "variants": "none currently"
+    },
+    "toast": {
+      "selector": ".toast",
+      "status": "PARTIAL — Phase 0 finding. A single hardcoded success-state instance exists. No variant modifier classes exist. Only 2 of 4 needed semantic feedback tokens existed before Phase 1 (success, error); warning and info were added in Phase 1 and are now available and AA-verified.",
+      "slots": [".tclose", ".tprog", ".tdot", ".tbody"],
+      "currentTokensUsed": ["primitive-neutral-0", "alias-brand-200", "semantic-feedback-success (hardcoded, not variant-driven)", "alias-radius-card", "alias-corner-shape", "semantic-focus", "primitive-neutral-400", "primitive-neutral-900", "semantic-font-body"],
+      "phase4Task": "Extend to 4 variants — toast-success, toast-warning, toast-error, toast-info — following the exact modifier-class convention already established by btn-primary/btn-secondary. Each variant swaps only the border-left colour and .tdot background to its corresponding --semantic-feedback-* token. Do not touch .tclose, .tprog structural rules — only the feedback-colour bindings vary per variant. Do not add a 5th variant, do not rename the base .toast class, do not introduce a new token-naming pattern."
+    }
+  }
+}

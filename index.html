@@ -28,6 +28,10 @@
   --primitive-atlas-acc:#FF7B6B;
   --primitive-space-1:4px; --primitive-space-2:8px; --primitive-space-3:16px;
   --primitive-space-4:24px; --primitive-space-5:40px; --primitive-space-6:64px;
+  /* MOTION PRIMITIVES — deliberately outside the brand/semantic/alias/primitive taxonomy.
+     Motion is not a themeable property in this system: easing, duration, distance and stagger
+     are global mechanical constants, identical across all three brands. Documented here as
+     Phase 1's resolution to the Phase 0 "off-taxonomy" naming finding — not a gap, a decision. */
   --ease-reveal:cubic-bezier(.16,1,.3,1); --ease-arrive:cubic-bezier(.34,1.4,.5,1);
   --dur-text:.60s; --dur-move:.75s; --dist-text:20px; --dist-card:40px; --stagger:100ms; --seq:120ms;
   --primitive-radius-none:0px; --primitive-radius-s:6px; --primitive-radius-m:12px; --primitive-radius-pill:999px;
@@ -92,10 +96,11 @@
   --semantic-text-onbrand:var(--primitive-neutral-0);
   --semantic-text-onbrand-soft:var(--alias-brand-300);
   --semantic-text-default:var(--primitive-neutral-900);
-  --semantic-text-soft:var(--primitive-neutral-400);
+  --semantic-text-soft:var(--primitive-neutral-700); /* was neutral-400 (2.7-2.9:1, AA fail) — now 9.96-10.79:1, verified AA pass */
   --semantic-badge-bg:var(--alias-brand-500);
   --semantic-focus:var(--alias-brand-accent);
   --semantic-feedback-success:#138000; --semantic-feedback-error:#D0421B;
+  --semantic-feedback-warning:#8A5A00; --semantic-feedback-info:#1D5FA8; /* added Phase 1 — both verified AA-safe as text (5.93:1, 6.45:1 on white) */
   --semantic-font-display:var(--alias-font-display);
   --semantic-font-body:var(--alias-font-body);
 }
