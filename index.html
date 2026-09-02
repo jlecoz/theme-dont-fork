@@ -266,7 +266,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .cbox{background:var(--primitive-neutral-50);border-radius:10px;padding:15px}
 .cbox .clabel{font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.11em;text-transform:uppercase;color:#8A9A9D;margin-bottom:12px}
 /* --- toast --- */
-.toast{position:relative;display:flex;gap:10px;align-items:flex-start;background:var(--primitive-neutral-0);border:1px solid var(--alias-brand-200);border-left:4px solid var(--semantic-feedback-success);border-radius:var(--alias-radius-card);corner-shape:var(--alias-corner-shape);padding:11px 30px 14px 13px;box-shadow:0 6px 18px rgba(10,15,20,.10);overflow:hidden;transition:border-color .45s,border-radius .45s}
+.toast{position:relative;display:flex;gap:10px;align-items:flex-start;background:var(--primitive-neutral-0);border:1px solid var(--alias-brand-200);border-left:4px solid transparent;border-radius:var(--alias-radius-card);corner-shape:var(--alias-corner-shape);padding:11px 30px 14px 13px;box-shadow:0 6px 18px rgba(10,15,20,.10);overflow:hidden;transition:border-color .45s,border-radius .45s}
 .toast .tclose{position:absolute;top:7px;right:7px;width:20px;height:20px;border:none;background:transparent;border-radius:5px;cursor:pointer;display:grid;place-items:center;color:var(--primitive-neutral-400);transition:background .18s,color .18s}
 .toast .tclose:hover{background:var(--alias-brand-100);color:var(--primitive-neutral-900)}
 .toast .tclose:focus-visible{outline:2px solid var(--semantic-focus);outline-offset:1px}
@@ -274,10 +274,18 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .toast .tprog{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--alias-brand-100)}
 .toast .tprog i{display:block;height:100%;background:var(--semantic-feedback-success);transform-origin:left;animation:toastTimer 5s linear infinite}
 @keyframes toastTimer{from{transform:scaleX(1)}to{transform:scaleX(0)}}
-.toast .tdot{width:17px;height:17px;border-radius:50%;background:var(--semantic-feedback-success);flex:0 0 auto;margin-top:1px;position:relative}
+.toast .tdot{width:17px;height:17px;border-radius:50%;flex:0 0 auto;margin-top:1px;position:relative}
 .toast .tdot:after{content:"";position:absolute;left:6px;top:4px;width:4px;height:7px;border:solid var(--primitive-neutral-0);border-width:0 2px 2px 0;transform:rotate(42deg)}
 .toast .tbody{font-family:var(--semantic-font-body);font-size:11.5px;color:var(--primitive-neutral-900);line-height:1.45}
 .toast .tbody b{display:block;font-weight:700;margin-bottom:2px}
+.toast-success{border-left-color:var(--semantic-feedback-success)}
+.toast-success .tdot{background:var(--semantic-feedback-success)}
+.toast-warning{border-left-color:var(--semantic-feedback-warning)}
+.toast-warning .tdot{background:var(--semantic-feedback-warning)}
+.toast-error{border-left-color:var(--semantic-feedback-error)}
+.toast-error .tdot{background:var(--semantic-feedback-error)}
+.toast-info{border-left-color:var(--semantic-feedback-info)}
+.toast-info .tdot{background:var(--semantic-feedback-info)}
 /* --- toggle --- */
 .tgrow{display:flex;align-items:center;gap:11px;margin-bottom:11px}
 .tg{width:42px;height:24px;border-radius:999px;background:var(--alias-brand-200);position:relative;cursor:pointer;border:none;flex:0 0 auto;transition:background .25s}
@@ -531,9 +539,27 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
           </div>
           <div class="cbox">
             <div class="clabel">Toast · feedback · dismiss · auto-timer</div>
-            <div class="toast" role="status">
+            <div class="toast toast-success" role="status">
               <span class="tdot"></span>
               <span class="tbody"><b>Added to basket</b>Starter kit — delivery in 2–3 days.</span>
+              <button class="tclose" aria-label="Dismiss notification"><svg viewBox="0 0 10 10"><path d="M1 1 L9 9 M9 1 L1 9"/></svg></button>
+              <span class="tprog" aria-hidden="true"><i></i></span>
+            </div>
+            <div class="toast toast-warning" role="status" style="margin-top:10px">
+              <span class="tdot"></span>
+              <span class="tbody"><b>Low stock</b>Only 2 left in your size.</span>
+              <button class="tclose" aria-label="Dismiss notification"><svg viewBox="0 0 10 10"><path d="M1 1 L9 9 M9 1 L1 9"/></svg></button>
+              <span class="tprog" aria-hidden="true"><i></i></span>
+            </div>
+            <div class="toast toast-error" role="status" style="margin-top:10px">
+              <span class="tdot"></span>
+              <span class="tbody"><b>Payment failed</b>Check your card details and retry.</span>
+              <button class="tclose" aria-label="Dismiss notification"><svg viewBox="0 0 10 10"><path d="M1 1 L9 9 M9 1 L1 9"/></svg></button>
+              <span class="tprog" aria-hidden="true"><i></i></span>
+            </div>
+            <div class="toast toast-info" role="status" style="margin-top:10px">
+              <span class="tdot"></span>
+              <span class="tbody"><b>Order shipped</b>Tracking details sent by email.</span>
               <button class="tclose" aria-label="Dismiss notification"><svg viewBox="0 0 10 10"><path d="M1 1 L9 9 M9 1 L1 9"/></svg></button>
               <span class="tprog" aria-hidden="true"><i></i></span>
             </div>

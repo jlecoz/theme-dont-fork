@@ -97,10 +97,16 @@
     },
     "toast": {
       "selector": ".toast",
-      "status": "PARTIAL — Phase 0 finding. A single hardcoded success-state instance exists. No variant modifier classes exist. Only 2 of 4 needed semantic feedback tokens existed before Phase 1 (success, error); warning and info were added in Phase 1 and are now available and AA-verified.",
+      "status": "DONE — Phase 4. Extended to 4 variants via modifier classes, matching the btn-primary/btn-secondary precedent. Base .toast/.tdot hold only structural rules (transparent placeholder border-left, colourless dot); each variant binds the feedback colour.",
       "slots": [".tclose", ".tprog", ".tdot", ".tbody"],
-      "currentTokensUsed": ["primitive-neutral-0", "alias-brand-200", "semantic-feedback-success (hardcoded, not variant-driven)", "alias-radius-card", "alias-corner-shape", "semantic-focus", "primitive-neutral-400", "primitive-neutral-900", "semantic-font-body"],
-      "phase4Task": "Extend to 4 variants — toast-success, toast-warning, toast-error, toast-info — following the exact modifier-class convention already established by btn-primary/btn-secondary. Each variant swaps only the border-left colour and .tdot background to its corresponding --semantic-feedback-* token. Do not touch .tclose, .tprog structural rules — only the feedback-colour bindings vary per variant. Do not add a 5th variant, do not rename the base .toast class, do not introduce a new token-naming pattern."
+      "variants": {
+        "toast-success": "border-left-color and .tdot background: semantic-feedback-success",
+        "toast-warning": "border-left-color and .tdot background: semantic-feedback-warning",
+        "toast-error": "border-left-color and .tdot background: semantic-feedback-error",
+        "toast-info": "border-left-color and .tdot background: semantic-feedback-info"
+      },
+      "tokensUsed": ["primitive-neutral-0", "alias-brand-200", "alias-brand-100", "semantic-feedback-success", "semantic-feedback-warning", "semantic-feedback-error", "semantic-feedback-info", "alias-radius-card", "alias-corner-shape", "semantic-focus", "primitive-neutral-400", "primitive-neutral-900", "semantic-font-body"],
+      "note": ".tprog i's progress-bar fill remains bound to semantic-feedback-success across all variants — unchanged by design per the Phase 4 task spec, which scoped the colour swap to border-left and .tdot only."
     }
   }
 }
