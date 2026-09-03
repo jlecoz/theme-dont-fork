@@ -97,16 +97,16 @@
     },
     "toast": {
       "selector": ".toast",
-      "status": "DONE — Phase 4. Extended to 4 variants via modifier classes, matching the btn-primary/btn-secondary precedent. Base .toast/.tdot hold only structural rules (transparent placeholder border-left, colourless dot); each variant binds the feedback colour.",
+      "status": "DONE — Phase 4, revised. Extended to 4 variants via modifier classes, matching the btn-primary/btn-secondary precedent. Base .toast/.tdot/.tprog i hold only structural rules (transparent placeholder border-left, colourless dot and bar); each variant binds the full feedback colour identity.",
       "slots": [".tclose", ".tprog", ".tdot", ".tbody"],
       "variants": {
-        "toast-success": "border-left-color and .tdot background: semantic-feedback-success",
-        "toast-warning": "border-left-color and .tdot background: semantic-feedback-warning",
-        "toast-error": "border-left-color and .tdot background: semantic-feedback-error",
-        "toast-info": "border-left-color and .tdot background: semantic-feedback-info"
+        "toast-success": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-success",
+        "toast-warning": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-warning",
+        "toast-error": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-error",
+        "toast-info": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-info"
       },
       "tokensUsed": ["primitive-neutral-0", "alias-brand-200", "alias-brand-100", "semantic-feedback-success", "semantic-feedback-warning", "semantic-feedback-error", "semantic-feedback-info", "alias-radius-card", "alias-corner-shape", "semantic-focus", "primitive-neutral-400", "primitive-neutral-900", "semantic-font-body"],
-      "note": ".tprog i's progress-bar fill remains bound to semantic-feedback-success across all variants — unchanged by design per the Phase 4 task spec, which scoped the colour swap to border-left and .tdot only."
+      "note": "The countdown progress bar (.tprog i) binds to the same state token as the border and dot, so a toast's full visual identity reflects its state — established convention (Carbon, React Toastify) ties the progress bar to notification intent. An earlier revision left the bar bound to success across all variants; design review caught it and it was corrected here."
     }
   }
 }
