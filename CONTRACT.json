@@ -24,7 +24,7 @@
   "globalRules": {
     "never": [
       "Never reference a --primitive-* token directly inside a component rule. Components read --semantic-* or --alias-* only — that indirection is what makes zero-override theming structural rather than disciplined.",
-      "Never reference a brand name (aurora/ember/atlas/deg) inside a component selector, EXCEPT the existing [data-brand=\"...\"] asset-visibility blocks, which exist specifically to swap per-brand SVG artwork and pattern devices. That exception is documented and closed — do not extend the pattern to anything else.",
+      "Never reference a brand name (aurora/ember/deg) inside a component selector, EXCEPT the existing [data-brand=\"...\"] asset-visibility blocks, which exist specifically to swap per-brand SVG artwork and pattern devices. That exception is documented and closed — do not extend the pattern to anything else.",
       "Never hardcode a hex colour value inside a component rule. All colour must resolve through a token, full stop.",
       "Never introduce a new --semantic-* token without: (1) adding it to this contract, (2) computing its WCAG contrast ratio against every background it will realistically sit on, (3) confirming it clears 4.5:1 for text usage or 3:1 for non-text UI components per WCAG 1.4.11.",
       "Never invent a new variant-naming convention. Every existing variant in this codebase uses a modifier class following the pattern `.component-variantname` (see btn-primary/btn-secondary). New variants must follow the same convention."

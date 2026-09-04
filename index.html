@@ -6,7 +6,7 @@
 <title>Theme, don't fork — live token demo · Digital Ronin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;600;800&family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;600;800&family=Fraunces:opsz,wght@9..144,400;9..144,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* =========================================================
    LAYER 4 · PRIMITIVES (raw values — brand-agnostic)
@@ -22,10 +22,6 @@
   --primitive-ember-400:#F79A63; --primitive-ember-500:#E8763C; --primitive-ember-600:#8E3A1C;
   --primitive-ember-700:#4A2117; --primitive-ember-800:#33150E; --primitive-ember-1000:#140805; --primitive-ember-900:#1E0C08;
   --primitive-ember-acc:#FFD25F;
-  --primitive-atlas-100:#E8F7F4; --primitive-atlas-200:#B9EAE1; --primitive-atlas-300:#7FD8CC;
-  --primitive-atlas-400:#45B3A5; --primitive-atlas-500:#1F8E82; --primitive-atlas-600:#14554E;
-  --primitive-atlas-700:#0C3A36; --primitive-atlas-800:#082623; --primitive-atlas-1000:#03100F; --primitive-atlas-900:#051816;
-  --primitive-atlas-acc:#FF7B6B;
   /* DEG · Abu Dhabi Department of Government Enablement — Deep Sapphire + Flamingo Red */
   --primitive-deg-100:#E8F0F6; --primitive-deg-200:#C5D8E8; --primitive-deg-300:#8FB4D6;
   --primitive-deg-400:#4A7BA8; --primitive-deg-500:#1A5080; --primitive-deg-600:#0A4572;
@@ -43,7 +39,6 @@
   --primitive-radius-none:0px; --primitive-radius-s:6px; --primitive-radius-m:12px; --primitive-radius-pill:999px;
   --primitive-font-inter:'Inter',system-ui,sans-serif;
   --primitive-font-fraunces:'Fraunces',Georgia,serif;
-  --primitive-font-syne:'Syne',system-ui,sans-serif;
 }
 /* =========================================================
    LAYER 1 · BRAND MODE  →  LAYER 3 · ALIASES
@@ -73,20 +68,6 @@
   --alias-type-scale:1.16; --alias-tracking-display:-0.01em; --alias-leading-display:1.00;
   --alias-weight-display:700; --alias-transform-display:none; --alias-font-name:"Fraunces"; --alias-space-scale:1.18;
   --alias-brand-accent-hover:#F0BC3E;
-  --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--alias-brand-accent);
-  --alias-tracking-cta:0.02em; --alias-transform-cta:none; --alias-btn-border:1.5px;
-  --alias-pattern-opacity:0.28;
-}
-[data-brand="atlas"]{
-  --alias-brand-100:var(--primitive-atlas-100); --alias-brand-200:var(--primitive-atlas-200); --alias-brand-300:var(--primitive-atlas-300); --alias-brand-400:var(--primitive-atlas-400);
-  --alias-brand-500:var(--primitive-atlas-500); --alias-brand-600:var(--primitive-atlas-600); --alias-brand-700:var(--primitive-atlas-700); --alias-brand-800:var(--primitive-atlas-800); --alias-brand-900:var(--primitive-atlas-900); --alias-brand-1000:var(--primitive-atlas-1000);
-  --alias-brand-accent:var(--primitive-atlas-acc);
-  --alias-corner-shape:round; --alias-radius-section:var(--primitive-radius-none); --alias-device-angle:0deg; --alias-radius-cta:var(--primitive-radius-none); --alias-radius-card:var(--primitive-radius-none);
-  --alias-pattern-name:"pixel-grid";
-  --alias-font-display:var(--primitive-font-syne); --alias-font-body:var(--primitive-font-inter);
-  --alias-type-scale:0.98; --alias-tracking-display:-0.01em; --alias-leading-display:1.04;
-  --alias-weight-display:800; --alias-transform-display:uppercase; --alias-font-name:"Syne"; --alias-space-scale:0.90;
-  --alias-brand-accent-hover:#E8604F;
   --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--alias-brand-accent);
   --alias-tracking-cta:0.02em; --alias-transform-cta:none; --alias-btn-border:1.5px;
   --alias-pattern-opacity:0.28;
@@ -192,7 +173,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .media .art{display:none}
 [data-brand="aurora"] .art-aurora{display:block}
 [data-brand="ember"]  .art-ember{display:block}
-[data-brand="atlas"]  .art-atlas{display:block}
 [data-brand="deg"]    .art-deg{display:block}
 .art .a-main{fill:var(--semantic-art-base)}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
 .art [class]{transition:fill .45s}
@@ -210,14 +190,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .art-ember .a-jet{transform-box:view-box;transform-origin:100px 132px;
   animation:jet .52s ease-in-out infinite;animation-delay:1.2s}
-/* Atlas ring: the accent travels the ellipse — unsquash → rotate → re-squash,
-   so it stays on the ring's plane instead of leaving it */
-@keyframes atlasSweep{
-  from{transform:translate(100px,104px) scale(1,.59375) rotate(0deg)   scale(1,1.68421) translate(-100px,-104px)}
-  to  {transform:translate(100px,104px) scale(1,.59375) rotate(360deg) scale(1,1.68421) translate(-100px,-104px)}
-}
-.art-atlas .a-acc{transform-box:view-box;transform-origin:0 0;
-  animation:atlasSweep 9s linear infinite;animation-delay:1.1s}
 /* DEG: accent bar draws as a solid administrative rule */
 @keyframes degRule{
   0%,100%{transform:scaleX(1)}
@@ -254,7 +226,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .pattern .p{display:none}
 [data-brand="aurora"] .p-aurora{display:block}
 [data-brand="ember"]  .p-ember{display:block}
-[data-brand="atlas"]  .p-atlas{display:block}
 [data-brand="deg"]    .p-deg{display:block}
 .cta-section .inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
 .cta-section h2{font-family:var(--semantic-font-display);font-size:calc(clamp(22px,2.6vw,30px) * var(--alias-type-scale));font-weight:var(--alias-weight-display);text-transform:var(--alias-transform-display);color:var(--semantic-text-onbrand);letter-spacing:var(--alias-tracking-display);line-height:var(--alias-leading-display)}
@@ -271,7 +242,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .pmedia .part{display:none}
 [data-brand="aurora"] .pmedia .p-aurora{display:block}
 [data-brand="ember"] .pmedia .p-ember{display:block}
-[data-brand="atlas"] .pmedia .p-atlas{display:block}
 [data-brand="deg"] .pmedia .p-deg{display:block}
 .pmedia .m-main{fill:var(--semantic-art-base)}.pmedia .m-mid{fill:var(--alias-brand-300)}.pmedia .m-deep{fill:var(--alias-brand-700)}.pmedia .m-acc{fill:var(--alias-brand-accent)}
 .pmedia svg [class]{transition:fill .45s}
@@ -462,19 +432,18 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .audit-chip .ct{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8E90;margin-bottom:2px}
 .audit-chip .cd{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4AC8E8}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
 <div class="chrome">
   <div class="chrome-head">
     <div class="mark"><span class="sq"></span>Theme, don't fork · live token demo</div>
-    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, Atlas, or DEG. Keys 1–4 also switch.">
+    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, or DGE. Keys 1–3 also switch.">
       <span class="lbl" id="brandModeLbl">Brand mode</span>
       <button type="button" class="bswitch" data-b="aurora" aria-pressed="true" aria-describedby="brandModeLbl">Aurora</button>
       <button type="button" class="bswitch" data-b="ember"  aria-pressed="false" aria-describedby="brandModeLbl">Ember</button>
-      <button type="button" class="bswitch" data-b="atlas"  aria-pressed="false" aria-describedby="brandModeLbl">Atlas</button>
-      <button type="button" class="bswitch" data-b="deg" title="Department of Government Enablement" aria-pressed="false" aria-describedby="brandModeLbl">DEG</button>
+      <button type="button" class="bswitch" data-b="deg" title="Department of Government Enablement" aria-pressed="false" aria-describedby="brandModeLbl">DGE</button>
     </div>
   </div>
 
@@ -517,18 +486,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <path class="a-mid" d="M112 108 L136 140 L112 132 Z"/>
               <g><path class="a-jet a-acc" d="M94 132 L106 132 L100 158 Z"/></g>
             </svg>
-            <svg class="art art-atlas" viewBox="0 0 200 200">
-              <!-- isometric ring: body rises, then the accent segment arrives -->
-              <g>
-                <ellipse class="a-deep" cx="100" cy="120" rx="64" ry="38"/>
-                <ellipse class="a-main" cx="100" cy="104" rx="64" ry="38"/>
-                <ellipse class="a-mid"  cx="100" cy="99"  rx="30" ry="17"/>
-                <ellipse class="a-deep" cx="100" cy="104" rx="30" ry="17"/>
-              </g>
-              <g>
-                <path class="a-acc" d="M148 78 A64 38 0 0 1 164 104 L134 104 A30 17 0 0 0 127 91 Z"/>
-              </g>
-            </svg>
             <svg class="art art-deg" viewBox="0 0 200 200">
               <!-- structured gov portal mark: nested squares + flamingo rule -->
               <rect class="a-deep" x="36" y="36" width="128" height="128"/>
@@ -558,14 +515,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               </pattern></defs>
               <rect width="100%" height="100%" fill="url(#pgB)"/>
             </svg>
-            <svg class="p p-atlas" preserveAspectRatio="xMidYMid slice">
-              <defs><pattern id="pgC" width="48" height="48" patternUnits="userSpaceOnUse">
-                <rect class="px-lg" x="18" y="18" width="7" height="7" fill="currentColor"/>
-                <rect class="px-sm" x="38" y="4" width="4.5" height="4.5" fill="currentColor" opacity=".6"/>
-                <rect class="px-sm" x="4" y="38" width="4.5" height="4.5" fill="currentColor" opacity=".6"/>
-              </pattern></defs>
-              <rect width="100%" height="100%" fill="url(#pgC)"/>
-            </svg>
             <svg class="p p-deg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100">
               <!-- government portal frame: outer rule + inner separation + corner ticks -->
               <rect x="4" y="4" width="92" height="92" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -576,7 +525,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
           </div>
           <div class="inner">
             <h2 class="rv-headline seq0">Discover what fits you</h2>
-            <p class="rv-body seq1">The same section, four brands. The background device — the pattern itself — resolves from a token, exactly like a colour.</p>
+            <p class="rv-body seq1">The same section, three brands. The background device — the pattern itself — resolves from a token, exactly like a colour.</p>
             <button class="btn btn-primary rv-pop seq2">Discover the range</button>
           </div>
         </section>
@@ -593,8 +542,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
                 <polygon class="m-acc" points="100,104 142,128 100,152 58,128"/><polygon class="m-deep" points="58,128 100,152 100,176 58,152"/><polygon class="m-mid" points="142,128 100,152 100,176 142,152"/></svg>
               <svg viewBox="0 0 200 200" class="part p-ember">
                 <ellipse class="m-mid" cx="100" cy="150" rx="42" ry="16"/><path class="m-main" d="M58 60 h84 v90 a42 16 0 0 1 -84 0 Z"/><ellipse class="m-main" cx="100" cy="60" rx="42" ry="16"/><ellipse class="m-deep" cx="100" cy="60" rx="26" ry="10"/><rect class="m-acc" x="76" y="92" width="48" height="14" rx="7"/></svg>
-              <svg viewBox="0 0 200 200" class="part p-atlas">
-                <ellipse class="m-deep" cx="100" cy="128" rx="62" ry="34"/><ellipse class="m-main" cx="100" cy="108" rx="62" ry="34"/><ellipse class="m-mid" cx="100" cy="103" rx="30" ry="16"/><ellipse class="m-deep" cx="100" cy="108" rx="30" ry="16"/><path class="m-acc" d="M146 84 A62 34 0 0 1 162 108 L130 108 A30 16 0 0 0 124 96 Z"/></svg>
               <svg viewBox="0 0 200 200" class="part p-deg">
                 <rect class="m-deep" x="48" y="48" width="104" height="104"/><rect class="m-main" x="64" y="64" width="72" height="72"/><rect class="m-mid" x="80" y="80" width="40" height="40"/><rect class="m-acc" x="64" y="140" width="72" height="8"/></svg>
             </div>
@@ -612,9 +559,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <svg viewBox="0 0 200 200" class="part p-ember">
                 <ellipse class="m-mid" cx="72" cy="140" rx="26" ry="10"/><path class="m-main" d="M46 86 h52 v54 a26 10 0 0 1 -52 0 Z"/><ellipse class="m-main" cx="72" cy="86" rx="26" ry="10"/><ellipse class="m-deep" cx="72" cy="86" rx="15" ry="6"/>
                 <ellipse class="m-mid" cx="132" cy="148" rx="24" ry="9"/><path class="m-acc" d="M108 104 h48 v44 a24 9 0 0 1 -48 0 Z"/><ellipse class="m-acc" cx="132" cy="104" rx="24" ry="9"/></svg>
-              <svg viewBox="0 0 200 200" class="part p-atlas">
-                <ellipse class="m-deep" cx="100" cy="140" rx="52" ry="28"/><ellipse class="m-main" cx="100" cy="126" rx="52" ry="28"/>
-                <ellipse class="m-deep" cx="100" cy="106" rx="38" ry="20"/><ellipse class="m-acc" cx="100" cy="96" rx="38" ry="20"/></svg>
               <svg viewBox="0 0 200 200" class="part p-deg">
                 <rect class="m-deep" x="40" y="56" width="120" height="88"/><rect class="m-main" x="56" y="72" width="88" height="56"/><rect class="m-acc" x="56" y="72" width="88" height="10"/></svg>
             </div>
@@ -632,9 +576,6 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
                 <polygon class="m-acc" points="136,92 168,110 136,128 104,110"/><polygon class="m-deep" points="104,110 136,128 136,154 104,136"/><polygon class="m-mid" points="168,110 136,128 136,154 168,136"/></svg>
               <svg viewBox="0 0 200 200" class="part p-ember">
                 <ellipse class="m-mid" cx="100" cy="136" rx="46" ry="17"/><path class="m-main" d="M54 104 h92 v32 a46 17 0 0 1 -92 0 Z"/><ellipse class="m-main" cx="100" cy="104" rx="46" ry="17"/><ellipse class="m-acc" cx="100" cy="104" rx="28" ry="10"/><rect class="m-deep" x="88" y="66" width="24" height="34" rx="12"/></svg>
-              <svg viewBox="0 0 200 200" class="part p-atlas">
-                <ellipse class="m-deep" cx="100" cy="126" rx="34" ry="19"/><ellipse class="m-main" cx="100" cy="114" rx="34" ry="19"/><ellipse class="m-acc" cx="100" cy="110" rx="15" ry="8"/>
-                <ellipse class="m-deep" cx="100" cy="90" rx="22" ry="12"/><ellipse class="m-mid" cx="100" cy="84" rx="22" ry="12"/></svg>
               <svg viewBox="0 0 200 200" class="part p-deg">
                 <rect class="m-deep" x="70" y="50" width="60" height="100"/><rect class="m-main" x="82" y="62" width="36" height="76"/><rect class="m-acc" x="82" y="62" width="36" height="8"/><rect class="m-mid" x="88" y="90" width="24" height="24"/></svg>
             </div>
@@ -988,7 +929,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
     b.tabIndex=b.getAttribute('aria-pressed')==='true'?0:-1;
     b.addEventListener('click',()=> setBrand(b.dataset.b, b));
     b.addEventListener('keydown',e=>{
-      const order=['aurora','ember','atlas','deg'];
+      const order=['aurora','ember','deg'];
       let idx=order.indexOf(b.dataset.b);
       if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); idx=(idx+1)%order.length; }
       else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); idx=(idx-1+order.length)%order.length; }
@@ -1001,7 +942,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
   });
 
   addEventListener('keydown',e=>{
-    const map={'1':'aurora','2':'ember','3':'atlas','4':'deg'};
+    const map={'1':'aurora','2':'ember','3':'deg'};
     if(map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey){
       const t=e.target;
       if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return;

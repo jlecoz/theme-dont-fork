@@ -2,7 +2,7 @@
 /**
  * ACCESSIBILITY GUARDRAIL — theme-dont-fork
  *
- * Computes WCAG 2.1 contrast on the token pairs that carry text, across all three brands.
+ * Computes WCAG 2.1 contrast on the token pairs that carry text, across all brands.
  * Fails the build if any text pairing drops below AA (4.5:1). This is what turns
  * "AA enforced at framework level" from a claim into a gate — a contrast regression
  * introduced by a human or an agent cannot merge.
@@ -39,11 +39,13 @@ const pairs = [
   // On-brand text on hero surface, per brand
   ['Aurora onbrand text',         '#FFFFFF', '#232D6B'],
   ['Ember onbrand text',          '#FFFFFF', '#4A2117'],
-  ['Atlas onbrand text',          '#FFFFFF', '#0C3A36'],
+  ['DGE onbrand text',            '#FFFFFF', '#063360'],
+  ['DGE soft onbrand text',       '#8FB4D6', '#063360'],
   // Primary action text on accent, per brand
   ['Aurora action text',          '#101617', '#B9F44C'],
   ['Ember action text',           '#101617', '#FFD25F'],
-  ['Atlas action text',           '#101617', '#FF7B6B'],
+  ['DGE action text',             '#101617', '#EF3F43'],
+  ['DGE action hover text',       '#FFFFFF', '#063360'],
 ];
 
 const fails = [];

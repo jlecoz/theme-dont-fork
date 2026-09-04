@@ -19,7 +19,7 @@ Switching brand remaps **alias → primitive**. Nothing else moves. Every compon
 ## The architecture
 
 ```
-BRAND MODE      aurora · ember · atlas          ← the only thing that changes
+BRAND MODE      aurora · ember · deg (DGE)          ← the only thing that changes
     ↓
 SEMANTIC        color.surface.hero              ← purpose. never brand-aware
     ↓
@@ -48,14 +48,14 @@ Open the CSS — it's ordered exactly as the architecture, with a banner per lay
 | **Colour** | surfaces, text, actions, feedback |
 | **Shape** | corner radii differ per brand — pill, squared, soft |
 | **Geometry** | the hero's background device skews to a per-brand angle |
-| **Pattern** | each brand has its own background device — plus-grid, diagonal dash, pixel grid |
+| **Pattern** | each brand has its own background device — plus-grid, diagonal dash, gov-frame |
 | **Assets** | the hero artwork itself swaps per brand |
 
 The token inspector on the right shows each chain resolving live as you switch.
 
 ## Notes
 
-The three brands — **Aurora**, **Ember**, **Atlas** — are invented for this demo. The palettes, patterns and artwork are deliberately unlike any real brand identity; this exists to demonstrate the architecture, not to reproduce anyone's work.
+**Aurora** and **Ember** are invented demo brands. **DGE** maps Department of Government Enablement tokens (Deep Sapphire + Flamingo) to prove a real entity can sit on the same zero-override stack.
 
 Single file, no build step, no dependencies. Fonts load from Google Fonts; everything else is inline.
 

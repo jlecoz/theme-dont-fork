@@ -4,7 +4,7 @@
 ## What was built
 1. `package.json` — minimal Node scaffold (one dev dependency), turning the static repo into one with a runnable guard step. No framework, no build — the demo stays a static HTML file.
 2. `scripts/check-tokens.mjs` — the token guardrail. Enforces that the **component library** consumes tokens only, never raw colour. Reads the system/harness boundary from `CONTRACT.json` rather than guessing.
-3. `scripts/check-a11y.mjs` — the accessibility guardrail. Computes WCAG contrast on all 13 text pairings across the three brands; fails below AA (4.5:1).
+3. `scripts/check-a11y.mjs` — the accessibility guardrail. Computes WCAG contrast on all text pairings across the brands; fails below AA (4.5:1).
 4. `.github/workflows/guardrails.yml` — runs both on every push and PR to main, identically whether a human or an AI agent opened the change.
 5. `CONTRACT.json` → new `boundary` block — the declared, explicit line between the token-governed **system** and the exempt demo **harness**. The architectural decision, documented in the contract.
 
