@@ -190,13 +190,13 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .art-ember .a-jet{transform-box:view-box;transform-origin:100px 132px;
   animation:jet .52s ease-in-out infinite;animation-delay:1.2s}
-/* DEG: portal frames hold; flamingo rule breathes — enablement as structure, not crest */
+/* DEG: frames hold; flamingo rule is continuous “service live” — same role as Ember’s jet */
 @keyframes degRule{
-  0%,100%{transform:scaleX(1)}
-  50%{transform:scaleX(.92)}
+  0%,100%{transform:scaleX(.72);opacity:.75}
+  50%{transform:scaleX(1);opacity:1}
 }
-.art-deg .a-acc{transform-box:view-box;transform-origin:100px 148px;
-  animation:degRule 3.6s var(--ease-reveal) infinite;animation-delay:1.1s}
+.art-deg .a-acc{transform-box:view-box;transform-origin:100px 152px;
+  animation:degRule 1.1s ease-in-out infinite;animation-delay:1.2s}
 
 /* motion: one content role, one entrance — from the portable motion system */
 @keyframes revHeadline{from{opacity:0;transform:translateY(10px) scale(.975)}to{opacity:1;transform:none}}
@@ -347,15 +347,48 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .pc2:hover .pmedia svg{transform:rotateY(180deg)}
 /* 3 · mirrors on X */
 .pc3:hover .pmedia svg{transform:scaleX(-1)}
-/* --- CTA: the pattern device turns 45° while the CTA is hovered --- */
+/* --- CTA pattern hover --- */
+/* Aurora / Ember: stroke devices turn 45° */
 .cta-section .pattern path,.cta-section .pattern .px-lg,.cta-section .pattern .px-sm{
   transform-box:fill-box;transform-origin:center;
   transition:transform .45s var(--ease-reveal),opacity .45s var(--ease-reveal)}
-/* stroke devices turn 45° */
 .cta-section:has(.btn-primary:hover) .pattern path{transform:rotate(45deg)}
-/* the pixel grid inverts instead — dominant dot recedes, quiet dots take over */
 .cta-section:has(.btn-primary:hover) .pattern .px-lg{transform:scale(.64) rotate(45deg);opacity:.55}
 .cta-section:has(.btn-primary:hover) .pattern .px-sm{transform:scale(1.55) rotate(45deg);opacity:1}
+/* DEG gov bars: idle strafe + grow; hover flips on X (horizontal axis) with bounce settle */
+.p-deg{overflow:visible}
+.p-deg .deg-bar-orbit{
+  transform-box:fill-box;transform-origin:center;
+  animation:degBarStrafe var(--bar-dur,5.2s) cubic-bezier(.45,.05,.25,1) infinite alternate;
+  animation-delay:var(--bar-delay,0s);
+}
+.p-deg .deg-bar-face{
+  transform-box:fill-box;transform-origin:center;
+  transition:transform .7s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes degBarStrafe{
+  0%{transform:translateX(0) scaleY(.72)}
+  35%{transform:translateX(var(--bar-strafe,8px)) scaleY(1.18)}
+  70%{transform:translateX(calc(var(--bar-strafe,8px) * -0.55)) scaleY(.88)}
+  100%{transform:translateX(calc(var(--bar-strafe,8px) * 0.35)) scaleY(1.05)}
+}
+.cta-section:has(.btn-primary:hover) .p-deg .deg-bar-face{
+  transform:scaleY(-1);
+}
+.cta-section:has(.btn-primary:hover) .p-deg .deg-bar-orbit:nth-child(odd) .deg-bar-face{
+  transition-delay:0ms;
+}
+.cta-section:has(.btn-primary:hover) .p-deg .deg-bar-orbit:nth-child(even) .deg-bar-face{
+  transition-delay:45ms;
+}
+.cta-section:not(:has(.btn-primary:hover)) .p-deg .deg-bar-face{
+  /* leave: bounce back into place (overshoot easing) */
+  transition:transform .85s cubic-bezier(.22,1.55,.36,1);
+}
+@media (prefers-reduced-motion:reduce){
+  .p-deg .deg-bar-orbit{animation:none!important}
+  .p-deg .deg-bar-face{transition:none!important;transform:none!important}
+}
 .rampnote{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:#8A9A9D;letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase}
 .swatch{width:32px;height:32px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;transition:all .25s}
 .swatch.s1{background:var(--alias-brand-700)}.swatch.s2{background:var(--alias-brand-500)}
@@ -488,12 +521,14 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <g><path class="a-jet a-acc" d="M94 132 L106 132 L100 158 Z"/></g>
             </svg>
             <svg class="art art-deg" viewBox="0 0 200 200">
-              <!-- structured gov portal mark: nested squares + flamingo rule (inspired, not official crest) -->
+              <!-- structured gov portal: frames static; flamingo rule is the animated segment -->
               <rect class="a-deep" x="36" y="36" width="128" height="128"/>
               <rect class="a-main" x="52" y="52" width="96" height="96"/>
               <rect class="a-mid"  x="68" y="68" width="64" height="64"/>
               <rect class="a-deep" x="84" y="84" width="32" height="32"/>
-              <rect class="a-acc"  x="52" y="148" width="96" height="8"/>
+              <g>
+                <rect class="a-acc" x="52" y="148" width="96" height="8"/>
+              </g>
             </svg>
           </div>
         </section>
@@ -516,12 +551,18 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               </pattern></defs>
               <rect width="100%" height="100%" fill="url(#pgB)"/>
             </svg>
-            <svg class="p p-deg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100">
-              <!-- government portal frame: outer rule + inner separation + corner ticks -->
-              <rect x="4" y="4" width="92" height="92" fill="none" stroke="currentColor" stroke-width="1.2"/>
-              <rect x="8" y="8" width="84" height="84" fill="none" stroke="currentColor" stroke-width="0.45" opacity=".7"/>
-              <path d="M4 14 H10 M90 14 H96 M4 86 H10 M90 86 H96 M14 4 V10 M14 90 V96 M86 4 V10 M86 90 V96" stroke="currentColor" stroke-width="1.4" fill="none"/>
-              <path d="M20 20 H80 M20 80 H80" stroke="currentColor" stroke-width="0.35" opacity=".45"/>
+            <svg class="p p-deg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 120 80">
+              <!-- vertical side bars: strafe + grow idle; flip on CTA hover -->
+              <g class="deg-bar-orbit" style="--bar-strafe:10px;--bar-dur:4.6s;--bar-delay:0s"><rect class="deg-bar-face" x="4" y="8" width="5" height="64" rx="1" fill="currentColor" opacity=".9"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:-12px;--bar-dur:5.1s;--bar-delay:.15s"><rect class="deg-bar-face" x="14" y="14" width="4" height="52" rx="1" fill="currentColor" opacity=".55"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:14px;--bar-dur:5.8s;--bar-delay:.35s"><rect class="deg-bar-face" x="24" y="6" width="6" height="68" rx="1" fill="currentColor" opacity=".75"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:-9px;--bar-dur:4.9s;--bar-delay:.08s"><rect class="deg-bar-face" x="36" y="18" width="3.5" height="44" rx="1" fill="currentColor" opacity=".4"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:11px;--bar-dur:6.2s;--bar-delay:.5s"><rect class="deg-bar-face" x="46" y="10" width="5" height="60" rx="1" fill="currentColor" opacity=".65"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:-13px;--bar-dur:5.4s;--bar-delay:.22s"><rect class="deg-bar-face" x="58" y="4" width="7" height="72" rx="1" fill="currentColor" opacity=".85"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:8px;--bar-dur:4.7s;--bar-delay:.4s"><rect class="deg-bar-face" x="72" y="16" width="4" height="48" rx="1" fill="currentColor" opacity=".45"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:-11px;--bar-dur:5.6s;--bar-delay:.12s"><rect class="deg-bar-face" x="82" y="8" width="5.5" height="64" rx="1" fill="currentColor" opacity=".7"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:15px;--bar-dur:6s;--bar-delay:.28s"><rect class="deg-bar-face" x="94" y="12" width="4" height="56" rx="1" fill="currentColor" opacity=".5"/></g>
+              <g class="deg-bar-orbit" style="--bar-strafe:-10px;--bar-dur:5s;--bar-delay:.45s"><rect class="deg-bar-face" x="106" y="6" width="6" height="68" rx="1" fill="currentColor" opacity=".8"/></g>
             </svg>
           </div>
           <div class="inner">
