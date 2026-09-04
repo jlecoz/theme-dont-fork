@@ -26,11 +26,17 @@
   --primitive-atlas-400:#45B3A5; --primitive-atlas-500:#1F8E82; --primitive-atlas-600:#14554E;
   --primitive-atlas-700:#0C3A36; --primitive-atlas-800:#082623; --primitive-atlas-1000:#03100F; --primitive-atlas-900:#051816;
   --primitive-atlas-acc:#FF7B6B;
+  /* DEG · Abu Dhabi Department of Government Enablement — Deep Sapphire + Flamingo Red */
+  --primitive-deg-100:#E8F0F6; --primitive-deg-200:#C5D8E8; --primitive-deg-300:#8FB4D6;
+  --primitive-deg-400:#4A7BA8; --primitive-deg-500:#1A5080; --primitive-deg-600:#0A4572;
+  --primitive-deg-700:#063360; --primitive-deg-800:#042848; --primitive-deg-900:#021A30; --primitive-deg-1000:#01101F;
+  --primitive-deg-acc:#EF3F43; /* Flamingo Red — action/accent; ink text on accent = 4.75:1 AA */
   --primitive-space-1:4px; --primitive-space-2:8px; --primitive-space-3:16px;
   --primitive-space-4:24px; --primitive-space-5:40px; --primitive-space-6:64px;
+  --primitive-radius-xs:2px; --primitive-radius-gov:4px;
   /* MOTION PRIMITIVES — deliberately outside the brand/semantic/alias/primitive taxonomy.
      Motion is not a themeable property in this system: easing, duration, distance and stagger
-     are global mechanical constants, identical across all three brands. Documented here as
+     are global mechanical constants, identical across all brands. Documented here as
      Phase 1's resolution to the Phase 0 "off-taxonomy" naming finding — not a gap, a decision. */
   --ease-reveal:cubic-bezier(.16,1,.3,1); --ease-arrive:cubic-bezier(.34,1.4,.5,1);
   --dur-text:.60s; --dur-move:.75s; --dist-text:20px; --dist-card:40px; --stagger:100ms; --seq:120ms;
@@ -53,6 +59,9 @@
   --alias-type-scale:1.00; --alias-tracking-display:-0.03em; --alias-leading-display:1.02;
   --alias-weight-display:800; --alias-transform-display:uppercase; --alias-font-name:"Inter"; --alias-space-scale:1.00;
   --alias-brand-accent-hover:#A3DE38;
+  --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--alias-brand-accent);
+  --alias-tracking-cta:0.02em; --alias-transform-cta:none; --alias-btn-border:1.5px;
+  --alias-pattern-opacity:0.28;
 }
 [data-brand="ember"]{
   --alias-brand-100:var(--primitive-ember-100); --alias-brand-200:var(--primitive-ember-200); --alias-brand-300:var(--primitive-ember-300); --alias-brand-400:var(--primitive-ember-400);
@@ -64,6 +73,9 @@
   --alias-type-scale:1.16; --alias-tracking-display:-0.01em; --alias-leading-display:1.00;
   --alias-weight-display:700; --alias-transform-display:none; --alias-font-name:"Fraunces"; --alias-space-scale:1.18;
   --alias-brand-accent-hover:#F0BC3E;
+  --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--alias-brand-accent);
+  --alias-tracking-cta:0.02em; --alias-transform-cta:none; --alias-btn-border:1.5px;
+  --alias-pattern-opacity:0.28;
 }
 [data-brand="atlas"]{
   --alias-brand-100:var(--primitive-atlas-100); --alias-brand-200:var(--primitive-atlas-200); --alias-brand-300:var(--primitive-atlas-300); --alias-brand-400:var(--primitive-atlas-400);
@@ -75,6 +87,26 @@
   --alias-type-scale:0.98; --alias-tracking-display:-0.01em; --alias-leading-display:1.04;
   --alias-weight-display:800; --alias-transform-display:uppercase; --alias-font-name:"Syne"; --alias-space-scale:0.90;
   --alias-brand-accent-hover:#E8604F;
+  --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--alias-brand-accent);
+  --alias-tracking-cta:0.02em; --alias-transform-cta:none; --alias-btn-border:1.5px;
+  --alias-pattern-opacity:0.28;
+}
+[data-brand="deg"]{
+  /* Deep Sapphire surfaces · Flamingo action · square gov geometry (0–4px) */
+  --alias-brand-100:var(--primitive-deg-100); --alias-brand-200:var(--primitive-deg-200); --alias-brand-300:var(--primitive-deg-300); --alias-brand-400:var(--primitive-deg-400);
+  --alias-brand-500:var(--primitive-deg-500); --alias-brand-600:var(--primitive-deg-600); --alias-brand-700:var(--primitive-deg-700); --alias-brand-800:var(--primitive-deg-800); --alias-brand-900:var(--primitive-deg-900); --alias-brand-1000:var(--primitive-deg-1000);
+  --alias-brand-accent:var(--primitive-deg-acc);
+  --alias-corner-shape:round; --alias-radius-section:var(--primitive-radius-none); --alias-device-angle:0deg;
+  --alias-radius-cta:var(--primitive-radius-gov); --alias-radius-card:var(--primitive-radius-xs);
+  --alias-pattern-name:"gov-frame";
+  --alias-font-display:var(--primitive-font-inter); --alias-font-body:var(--primitive-font-inter);
+  --alias-type-scale:1.02; --alias-tracking-display:0.06em; --alias-leading-display:1.08;
+  --alias-weight-display:700; --alias-transform-display:uppercase; --alias-font-name:"Inter"; --alias-space-scale:1.00;
+  --alias-brand-accent-hover:#C42A2E;
+  /* Hover: Sapphire + white (12.7:1) — Flamingo-on-Sapphire fails text AA at 3.3:1 */
+  --alias-action-hover-bg:var(--alias-brand-700); --alias-action-hover-text:var(--primitive-neutral-0);
+  --alias-tracking-cta:0.08em; --alias-transform-cta:uppercase; --alias-btn-border:2px;
+  --alias-pattern-opacity:0.42;
 }
 /* =========================================================
    LAYER 2 · SEMANTICS (meaning — never brand-aware)
@@ -87,9 +119,9 @@
   --semantic-art-base:var(--primitive-neutral-0); /* Phase 3: base fill for per-brand SVG artwork — was hardcoded #EAF6F8/#FFFFFF */
   --semantic-action-primary:var(--alias-brand-accent);
   --semantic-action-primary-text:var(--primitive-neutral-900);
-  /* invert: background and text exchange roles */
-  --semantic-action-primary-hover-bg:var(--alias-brand-700);
-  --semantic-action-primary-hover-text:var(--alias-brand-accent);
+  /* invert: background and text exchange roles (DEG remaps hover text via alias for AA) */
+  --semantic-action-primary-hover-bg:var(--alias-action-hover-bg);
+  --semantic-action-primary-hover-text:var(--alias-action-hover-text);
   --semantic-action-secondary-hover-bg:var(--primitive-neutral-0);
   --semantic-action-secondary-hover-text:var(--alias-brand-700);
   --semantic-action-primary-text:var(--primitive-neutral-900);
@@ -131,9 +163,9 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .chrome-head.condensed:after{opacity:1}
 .mark{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#B8D4D8;text-transform:uppercase}
 .mark .sq{width:12px;height:12px;background:#4AC8E8;flex:none}
-.switcher{display:flex;gap:8px;align-items:center}
+.switcher{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .switcher .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E8E90;text-transform:uppercase;margin-right:4px}
-.bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 18px;border-radius:999px;border:1px solid #24343433;background:#111517;color:#B8D4D8;cursor:pointer;transition:background .2s,color .2s,border-color .2s,padding .28s var(--ease-reveal),font-size .28s var(--ease-reveal)}
+.bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 14px;border-radius:999px;border:1px solid #24343433;background:#111517;color:#B8D4D8;cursor:pointer;transition:background .2s,color .2s,border-color .2s,padding .28s var(--ease-reveal),font-size .28s var(--ease-reveal)}
 .bswitch:hover{border-color:#4AC8E8;color:#fff}
 .bswitch[aria-pressed="true"]{background:#4AC8E8;color:#0A0B0C;border-color:#4AC8E8;font-weight:700}
 .bswitch:focus-visible{outline:2.5px solid #4AC8E8;outline-offset:2px}
@@ -161,6 +193,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 [data-brand="aurora"] .art-aurora{display:block}
 [data-brand="ember"]  .art-ember{display:block}
 [data-brand="atlas"]  .art-atlas{display:block}
+[data-brand="deg"]    .art-deg{display:block}
 .art .a-main{fill:var(--semantic-art-base)}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
 .art [class]{transition:fill .45s}
 /* Aurora: the lower cube slides up into the upper one, then settles */
@@ -185,6 +218,13 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .art-atlas .a-acc{transform-box:view-box;transform-origin:0 0;
   animation:atlasSweep 9s linear infinite;animation-delay:1.1s}
+/* DEG: accent bar draws as a solid administrative rule */
+@keyframes degRule{
+  0%,100%{transform:scaleX(1)}
+  50%{transform:scaleX(.92)}
+}
+.art-deg .a-acc{transform-box:view-box;transform-origin:100px 148px;
+  animation:degRule 3.6s var(--ease-reveal) infinite;animation-delay:1.1s}
 /* motion: one content role, one entrance — from the portable motion system */
 @keyframes revHeadline{from{opacity:0;transform:translateY(10px) scale(.975)}to{opacity:1;transform:none}}
 @keyframes revBody{from{opacity:0;transform:translateY(var(--dist-text))}to{opacity:1;transform:none}}
@@ -209,12 +249,13 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
    COMPONENT · CTA SECTION — pattern-carrier (Image-2 analogue)
    ========================================================= */
 .cta-section{position:relative;border-radius:var(--alias-radius-section);corner-shape:var(--alias-corner-shape);transition:border-radius .45s ease;overflow:hidden;background:var(--semantic-surface-section);padding:46px 30px;text-align:center;transition:background .45s ease}
-.cta-section .pattern{position:absolute;inset:0;opacity:.28;pointer-events:none;color:var(--alias-brand-300);transition:color .45s}
+.cta-section .pattern{position:absolute;inset:0;opacity:var(--alias-pattern-opacity);pointer-events:none;color:var(--alias-brand-300);transition:color .45s,opacity .45s}
 .cta-section .pattern svg{width:100%;height:100%}
 .pattern .p{display:none}
 [data-brand="aurora"] .p-aurora{display:block}
 [data-brand="ember"]  .p-ember{display:block}
 [data-brand="atlas"]  .p-atlas{display:block}
+[data-brand="deg"]    .p-deg{display:block}
 .cta-section .inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
 .cta-section h2{font-family:var(--semantic-font-display);font-size:calc(clamp(22px,2.6vw,30px) * var(--alias-type-scale));font-weight:var(--alias-weight-display);text-transform:var(--alias-transform-display);color:var(--semantic-text-onbrand);letter-spacing:var(--alias-tracking-display);line-height:var(--alias-leading-display)}
 .cta-section p{font-family:var(--semantic-font-body);font-size:13px;color:var(--semantic-text-onbrand);opacity:.85;max-width:52ch}
@@ -231,6 +272,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 [data-brand="aurora"] .pmedia .p-aurora{display:block}
 [data-brand="ember"] .pmedia .p-ember{display:block}
 [data-brand="atlas"] .pmedia .p-atlas{display:block}
+[data-brand="deg"] .pmedia .p-deg{display:block}
 .pmedia .m-main{fill:var(--semantic-art-base)}.pmedia .m-mid{fill:var(--alias-brand-300)}.pmedia .m-deep{fill:var(--alias-brand-700)}.pmedia .m-acc{fill:var(--alias-brand-accent)}
 .pmedia svg [class]{transition:fill .45s}
 .product-card .pbody{display:flex;flex-direction:column;flex:1;padding:16px 18px 18px}
@@ -239,11 +281,11 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .product-card .prow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .price{font-size:20px;font-weight:800;color:var(--semantic-text-default)}
 .price-was{font-size:12px;color:var(--primitive-neutral-400);text-decoration:line-through}
-.badge{corner-shape:var(--alias-corner-shape);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;background:var(--semantic-badge-bg);color:var(--primitive-neutral-0);padding:4px 9px;border-radius:999px;transition:background .45s}
+.badge{corner-shape:var(--alias-corner-shape);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;background:var(--semantic-badge-bg);color:var(--primitive-neutral-0);padding:4px 9px;border-radius:var(--alias-radius-cta);transition:background .45s,border-radius .45s}
 /* ===== atoms ===== */
-.btn{font-family:var(--semantic-font-body);font-size:13px;font-weight:600;padding:11px 22px;border-radius:var(--alias-radius-cta);corner-shape:var(--alias-corner-shape);cursor:pointer;border:1.5px solid transparent;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .12s ease;letter-spacing:.02em}
+.btn{font-family:var(--semantic-font-body);font-size:13px;font-weight:600;padding:11px 22px;border-radius:var(--alias-radius-cta);corner-shape:var(--alias-corner-shape);cursor:pointer;border:var(--alias-btn-border) solid transparent;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .12s ease;letter-spacing:var(--alias-tracking-cta);text-transform:var(--alias-transform-cta)}
 .btn:focus-visible{outline:2.5px solid var(--semantic-focus);outline-offset:2px}
-.btn-primary{background:var(--semantic-action-primary);color:var(--semantic-action-primary-text)}
+.btn-primary{background:var(--semantic-action-primary);color:var(--semantic-action-primary-text);border-color:var(--semantic-action-primary)}
 .btn-primary:hover{background:var(--semantic-action-primary-hover-bg);color:var(--semantic-action-primary-hover-text);border-color:var(--semantic-action-primary-hover-text);transform:translateY(-1px)}
 .btn-primary:active{transform:translateY(0)}
 .btn-secondary{background:transparent;color:var(--semantic-text-onbrand);border-color:var(--semantic-action-secondary-border)}
@@ -420,18 +462,19 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .audit-chip .ct{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8E90;margin-bottom:2px}
 .audit-chip .cd{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4AC8E8}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
 <div class="chrome">
   <div class="chrome-head">
     <div class="mark"><span class="sq"></span>Theme, don't fork · live token demo</div>
-    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, or Atlas. Keys 1–3 also switch.">
+    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, Atlas, or DEG. Keys 1–4 also switch.">
       <span class="lbl" id="brandModeLbl">Brand mode</span>
       <button type="button" class="bswitch" data-b="aurora" aria-pressed="true" aria-describedby="brandModeLbl">Aurora</button>
       <button type="button" class="bswitch" data-b="ember"  aria-pressed="false" aria-describedby="brandModeLbl">Ember</button>
       <button type="button" class="bswitch" data-b="atlas"  aria-pressed="false" aria-describedby="brandModeLbl">Atlas</button>
+      <button type="button" class="bswitch" data-b="deg" title="Department of Government Enablement" aria-pressed="false" aria-describedby="brandModeLbl">DEG</button>
     </div>
   </div>
 
@@ -486,6 +529,14 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
                 <path class="a-acc" d="M148 78 A64 38 0 0 1 164 104 L134 104 A30 17 0 0 0 127 91 Z"/>
               </g>
             </svg>
+            <svg class="art art-deg" viewBox="0 0 200 200">
+              <!-- structured gov portal mark: nested squares + flamingo rule -->
+              <rect class="a-deep" x="36" y="36" width="128" height="128"/>
+              <rect class="a-main" x="52" y="52" width="96" height="96"/>
+              <rect class="a-mid"  x="68" y="68" width="64" height="64"/>
+              <rect class="a-deep" x="84" y="84" width="32" height="32"/>
+              <rect class="a-acc"  x="52" y="148" width="96" height="8"/>
+            </svg>
           </div>
         </section>
       </div>
@@ -515,10 +566,17 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               </pattern></defs>
               <rect width="100%" height="100%" fill="url(#pgC)"/>
             </svg>
+            <svg class="p p-deg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100">
+              <!-- government portal frame: outer rule + inner separation + corner ticks -->
+              <rect x="4" y="4" width="92" height="92" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="8" y="8" width="84" height="84" fill="none" stroke="currentColor" stroke-width="0.45" opacity=".7"/>
+              <path d="M4 14 H10 M90 14 H96 M4 86 H10 M90 86 H96 M14 4 V10 M14 90 V96 M86 4 V10 M86 90 V96" stroke="currentColor" stroke-width="1.4" fill="none"/>
+              <path d="M20 20 H80 M20 80 H80" stroke="currentColor" stroke-width="0.35" opacity=".45"/>
+            </svg>
           </div>
           <div class="inner">
             <h2 class="rv-headline seq0">Discover what fits you</h2>
-            <p class="rv-body seq1">The same section, three brands. The background device — the pattern itself — resolves from a token, exactly like a colour.</p>
+            <p class="rv-body seq1">The same section, four brands. The background device — the pattern itself — resolves from a token, exactly like a colour.</p>
             <button class="btn btn-primary rv-pop seq2">Discover the range</button>
           </div>
         </section>
@@ -537,6 +595,8 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
                 <ellipse class="m-mid" cx="100" cy="150" rx="42" ry="16"/><path class="m-main" d="M58 60 h84 v90 a42 16 0 0 1 -84 0 Z"/><ellipse class="m-main" cx="100" cy="60" rx="42" ry="16"/><ellipse class="m-deep" cx="100" cy="60" rx="26" ry="10"/><rect class="m-acc" x="76" y="92" width="48" height="14" rx="7"/></svg>
               <svg viewBox="0 0 200 200" class="part p-atlas">
                 <ellipse class="m-deep" cx="100" cy="128" rx="62" ry="34"/><ellipse class="m-main" cx="100" cy="108" rx="62" ry="34"/><ellipse class="m-mid" cx="100" cy="103" rx="30" ry="16"/><ellipse class="m-deep" cx="100" cy="108" rx="30" ry="16"/><path class="m-acc" d="M146 84 A62 34 0 0 1 162 108 L130 108 A30 16 0 0 0 124 96 Z"/></svg>
+              <svg viewBox="0 0 200 200" class="part p-deg">
+                <rect class="m-deep" x="48" y="48" width="104" height="104"/><rect class="m-main" x="64" y="64" width="72" height="72"/><rect class="m-mid" x="80" y="80" width="40" height="40"/><rect class="m-acc" x="64" y="140" width="72" height="8"/></svg>
             </div>
             <div class="pbody">
               <h3>Starter kit</h3>
@@ -555,6 +615,8 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <svg viewBox="0 0 200 200" class="part p-atlas">
                 <ellipse class="m-deep" cx="100" cy="140" rx="52" ry="28"/><ellipse class="m-main" cx="100" cy="126" rx="52" ry="28"/>
                 <ellipse class="m-deep" cx="100" cy="106" rx="38" ry="20"/><ellipse class="m-acc" cx="100" cy="96" rx="38" ry="20"/></svg>
+              <svg viewBox="0 0 200 200" class="part p-deg">
+                <rect class="m-deep" x="40" y="56" width="120" height="88"/><rect class="m-main" x="56" y="72" width="88" height="56"/><rect class="m-acc" x="56" y="72" width="88" height="10"/></svg>
             </div>
             <div class="pbody">
               <h3>Everyday set</h3>
@@ -573,6 +635,8 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <svg viewBox="0 0 200 200" class="part p-atlas">
                 <ellipse class="m-deep" cx="100" cy="126" rx="34" ry="19"/><ellipse class="m-main" cx="100" cy="114" rx="34" ry="19"/><ellipse class="m-acc" cx="100" cy="110" rx="15" ry="8"/>
                 <ellipse class="m-deep" cx="100" cy="90" rx="22" ry="12"/><ellipse class="m-mid" cx="100" cy="84" rx="22" ry="12"/></svg>
+              <svg viewBox="0 0 200 200" class="part p-deg">
+                <rect class="m-deep" x="70" y="50" width="60" height="100"/><rect class="m-main" x="82" y="62" width="36" height="76"/><rect class="m-acc" x="82" y="62" width="36" height="8"/><rect class="m-mid" x="88" y="90" width="24" height="24"/></svg>
             </div>
             <div class="pbody">
               <h3>Refill pack</h3>
@@ -924,7 +988,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
     b.tabIndex=b.getAttribute('aria-pressed')==='true'?0:-1;
     b.addEventListener('click',()=> setBrand(b.dataset.b, b));
     b.addEventListener('keydown',e=>{
-      const order=['aurora','ember','atlas'];
+      const order=['aurora','ember','atlas','deg'];
       let idx=order.indexOf(b.dataset.b);
       if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); idx=(idx+1)%order.length; }
       else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); idx=(idx-1+order.length)%order.length; }
@@ -937,7 +1001,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
   });
 
   addEventListener('keydown',e=>{
-    const map={'1':'aurora','2':'ember','3':'atlas'};
+    const map={'1':'aurora','2':'ember','3':'atlas','4':'deg'};
     if(map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey){
       const t=e.target;
       if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return;

@@ -4,7 +4,7 @@ You are working in a design-token-driven multi-brand demo. Before writing any CS
 
 ## What this system is
 
-One component library, three invented brands (Aurora, Ember, Atlas), zero component overrides. Brand lives in exactly one layer — switching `[data-brand]` remaps alias tokens to different primitives. Nothing above that layer knows brands exist.
+One component library, four brands (Aurora, Ember, Atlas, DEG / Govt Enablement), zero component overrides. Brand lives in exactly one layer — switching `[data-brand]` remaps alias tokens to different primitives. Nothing above that layer knows brands exist.
 
 ## The rule that matters most
 
