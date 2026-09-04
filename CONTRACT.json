@@ -3,8 +3,9 @@
   "version": "phase-2-2026-08-27",
   "sourceOfTruth": "index.html is canonical. No design tool file exists for this project — there is nothing else to reconcile against.",
   "architecture": {
-    "layers": ["brand (data-brand attribute)", "semantic (--semantic-*)", "alias (--alias-*)", "primitive (--primitive-*)"],
-    "motionPrimitives": "Global, non-brand-scoped constants (--dur-*, --ease-*, --dist-*, --stagger, --seq). Motion does not vary by brand in this system — this is a deliberate 4th category, not a taxonomy gap. See Phase 1 spec for the reasoning."
+    "layers": ["brand (data-brand attribute)", "scheme (data-scheme light|dark)", "semantic (--semantic-*)", "alias (--alias-*)", "primitive (--primitive-*)"],
+    "motionPrimitives": "Global, non-brand-scoped constants (--dur-*, --ease-*, --dist-*, --stagger, --seq). Motion does not vary by brand in this system — this is a deliberate 4th category, not a taxonomy gap. See Phase 1 spec for the reasoning.",
+    "colorScheme": "data-scheme is orthogonal to data-brand. Brand remaps alias→primitive; scheme remaps neutral semantics (surface-card, text-default/soft) and harness chrome vars. Components still consume --semantic-* / --alias-* only."
   },
   "boundary": {
     "note": "The 'tokens only, zero overrides' contract governs the COMPONENT LIBRARY — the reusable system being sold. It does NOT govern the demo harness (the browser-chrome mockup, the token inspector, the stage scaffolding) that exists to SHOW the system. Holding the harness to the contract is a category error. This boundary is declared here so the guardrail reads it from the contract rather than guessing. Drawing this line explicitly is itself the senior distinction — a design system is a bounded, governed contract with a defined edge, not 'all the CSS in the file'.",
@@ -15,7 +16,7 @@
       ".art", ".pmedia", ".media", ".pattern"
     ],
     "harnessSelectorPrefixes": [
-      "body", ".chrome", ".mark", ".switcher", ".bswitch", ".stage",
+      "body", ".chrome", ".mark", ".switcher", ".bswitch", ".scheme-toggle", ".chrome-coach", ".chrome-actions", ".stage",
       ".stage-label", ".step", ".ramp", ".swatches", ".tscale", ".sbar",
       ".rampnote", ".inspector", ".ovr", ".chain", ".legend", ".cbox .clabel", ".atom h4"
     ],
@@ -74,8 +75,10 @@
     "badge": {
       "selector": ".badge",
       "purpose": "Small status/label chip.",
-      "tokensUsed": ["alias-corner-shape", "semantic-badge-bg", "primitive-neutral-0"],
-      "variants": "none currently — single style"
+      "tokensUsed": ["alias-corner-shape", "semantic-badge-bg", "semantic-badge-new-bg", "primitive-neutral-0"],
+      "variants": {
+        "badge-new": "background: semantic-badge-new-bg — fixed brand-agnostic violet (#7C3AED), deliberately outside all three brand palettes so a 'recently added' flag reads the same regardless of active brand. White text (primitive-neutral-0, inherited from .badge base) verified 5.70:1 against it — clears AA 4.5:1 for text."
+      }
     },
     "toggle": {
       "selector": ".tg",

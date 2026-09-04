@@ -36,6 +36,8 @@ const pairs = [
   ['feedback-error on white',     '#D0421B', '#FFFFFF'],
   ['feedback-warning on white',   '#8A5A00', '#FFFFFF'],
   ['feedback-info on white',      '#1D5FA8', '#FFFFFF'],
+  // Badge "new" variant — fixed brand-agnostic violet, white text
+  ['badge-new text',              '#FFFFFF', '#7C3AED'],
   // On-brand text on hero surface, per brand
   ['Aurora onbrand text',         '#FFFFFF', '#232D6B'],
   ['Ember onbrand text',          '#FFFFFF', '#4A2117'],

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-brand="aurora">
+<html lang="en" data-brand="aurora" data-scheme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,50 +112,121 @@
   --semantic-text-default:var(--primitive-neutral-900);
   --semantic-text-soft:var(--primitive-neutral-700); /* was neutral-400 (2.7-2.9:1, AA fail) — now 9.96-10.79:1, verified AA pass */
   --semantic-badge-bg:var(--alias-brand-500);
+  --semantic-badge-new-bg:#7C3AED; /* fixed, brand-agnostic — outside all 3 brand palettes so "new" reads the same everywhere; white text 5.70:1, AA pass */
   --semantic-focus:var(--alias-brand-accent);
   --semantic-feedback-success:#138000; --semantic-feedback-error:#D0421B;
   --semantic-feedback-warning:#8A5A00; --semantic-feedback-info:#1D5FA8; /* added Phase 1 — both verified AA-safe as text (5.93:1, 6.45:1 on white) */
   --semantic-font-display:var(--alias-font-display);
   --semantic-font-body:var(--alias-font-body);
 }
-/* ===== Ronin chrome ===== */
+/* Color scheme remaps neutral semantics — orthogonal to brand (data-brand) */
+[data-scheme="dark"]{
+  --semantic-surface-card:#161A1C;
+  --semantic-art-base:#EAF6F8;
+  --semantic-text-default:#F2F8FA;
+  --semantic-text-soft:#B8D4D8; /* ~9.5:1 on #161A1C */
+  --semantic-action-secondary-hover-bg:#F2F8FA;
+  --semantic-action-secondary-hover-text:var(--alias-brand-800);
+}
+[data-scheme="light"]{
+  --semantic-surface-card:var(--primitive-neutral-0);
+  --semantic-art-base:var(--primitive-neutral-0);
+  --semantic-text-default:var(--primitive-neutral-900);
+  --semantic-text-soft:var(--primitive-neutral-700);
+}
+/* ===== Ronin chrome — harness vars (scheme-aware) ===== */
+[data-scheme="dark"]{
+  --chrome-bg:#0A0B0C; --chrome-fg:#F5F5F5; --chrome-muted:#7E8E90; --chrome-soft:#B8D4D8;
+  --chrome-panel:#101314; --chrome-panel-2:#0D1112; --chrome-line:#1c2426;
+  --chrome-accent:#4AC8E8; --chrome-head-bg:rgba(10,11,12,.92);
+  --chrome-switcher-bg:#0D1416; --chrome-btn:#111517; --chrome-btn-fg:#C5DADC;
+}
+[data-scheme="light"]{
+  --chrome-bg:#F0F2F3; --chrome-fg:#0A0B0C; --chrome-muted:#5A6A6C; --chrome-soft:#33403F;
+  --chrome-panel:#FFFFFF; --chrome-panel-2:#FFFFFF; --chrome-line:#D6DEE0;
+  --chrome-accent:#0D6E7A; --chrome-head-bg:rgba(240,242,243,.94);
+  --chrome-switcher-bg:#FFFFFF; --chrome-btn:#E8EEF0; --chrome-btn-fg:#0A0B0C;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:96px}
-.chrome{max-width:1280px;margin:0 auto;padding:26px 30px 40px}
-/* sticky chrome — condenses to a switcher-only bar on scroll */
+body{background:var(--chrome-bg);color:var(--chrome-fg);font-family:'Poppins',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:96px;transition:background .35s ease,color .35s ease}
+.chrome{max-width:1280px;margin:0 auto;padding:18px 30px 40px}
+/* sticky chrome — always elevated so FTU can find brand controls */
 .chrome-head{position:sticky;top:0;z-index:60;display:flex;justify-content:space-between;align-items:center;gap:16px;
-  margin:0 -30px 20px;padding:0 30px;height:66px;
-  background:transparent;border-bottom:1px solid transparent;
-  transition:height .28s var(--ease-reveal), background .28s var(--ease-reveal),
+  margin:0 -30px 14px;padding:10px 30px;min-height:72px;
+  background:var(--chrome-head-bg);backdrop-filter:blur(14px) saturate(1.15);
+  -webkit-backdrop-filter:blur(14px) saturate(1.15);
+  border-bottom:1px solid var(--chrome-line);box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transition:min-height .28s var(--ease-reveal), background .28s var(--ease-reveal),
              border-color .28s var(--ease-reveal), box-shadow .28s var(--ease-reveal),
              backdrop-filter .28s var(--ease-reveal)}
-.chrome-head.condensed{height:52px;background:rgba(10,11,12,.82);backdrop-filter:blur(14px) saturate(1.2);
-  -webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom-color:#1c2426;box-shadow:0 10px 30px rgba(0,0,0,.45)}
-/* the mark recedes; the switcher is what stays */
+.chrome-head.condensed{min-height:56px;padding-top:8px;padding-bottom:8px;box-shadow:0 10px 28px rgba(0,0,0,.28)}
 .chrome-head .mark{transition:opacity .28s var(--ease-reveal), transform .28s var(--ease-reveal), max-width .28s var(--ease-reveal)}
 .chrome-head.condensed .mark{opacity:0;transform:translateX(-8px);max-width:0;overflow:hidden;white-space:nowrap;pointer-events:none}
-.chrome-head .lbl{transition:opacity .22s var(--ease-reveal), max-width .28s var(--ease-reveal), margin .28s var(--ease-reveal)}
-.chrome-head.condensed .lbl{opacity:0;max-width:0;margin:0;overflow:hidden;white-space:nowrap}
-.chrome-head.condensed .switcher{margin-left:auto}
-.chrome-head.condensed .bswitch{padding:7px 15px;font-size:11.5px}
-/* progress hairline reads as 'you are scrolling' */
+.chrome-head.condensed .chrome-actions{margin-left:auto}
+.chrome-head.condensed .bswitch{padding:7px 13px;font-size:11.5px}
 .chrome-head:after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:var(--scrolled,0%);
-  background:linear-gradient(90deg,#12524D,#4AC8E8);opacity:0;transition:opacity .28s var(--ease-reveal);border-radius:0 2px 2px 0}
+  background:linear-gradient(90deg,#12524D,var(--chrome-accent));opacity:0;transition:opacity .28s var(--ease-reveal);border-radius:0 2px 2px 0}
 .chrome-head.condensed:after{opacity:1}
-.mark{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#B8D4D8;text-transform:uppercase}
-.mark .sq{width:12px;height:12px;background:#4AC8E8;flex:none}
-.switcher{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.switcher .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#7E8E90;text-transform:uppercase;margin-right:4px}
-.bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 14px;border-radius:999px;border:1px solid #24343433;background:#111517;color:#B8D4D8;cursor:pointer;transition:background .2s,color .2s,border-color .2s,padding .28s var(--ease-reveal),font-size .28s var(--ease-reveal)}
-.bswitch:hover{border-color:#4AC8E8;color:#fff}
-.bswitch[aria-pressed="true"]{background:#4AC8E8;color:#0A0B0C;border-color:#4AC8E8;font-weight:700}
-.bswitch:focus-visible{outline:2.5px solid #4AC8E8;outline-offset:2px}
-.bswitch[aria-pressed="false"]{color:#C5DADC} /* AA on #111517 chrome */
+.mark{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--chrome-soft);text-transform:uppercase}
+.mark .sq{width:12px;height:12px;background:var(--chrome-accent);flex:none}
+.chrome-actions{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.scheme-toggle{
+  appearance:none;align-self:center;display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
+  padding:10px 12px;border-radius:999px;border:1px solid var(--chrome-line);
+  background:var(--chrome-btn);color:var(--chrome-btn-fg);cursor:pointer;
+  transition:border-color .2s,background .2s,color .2s;
+}
+.scheme-toggle:hover{border-color:var(--chrome-accent);color:var(--chrome-fg)}
+.scheme-toggle:focus-visible{outline:2.5px solid var(--chrome-accent);outline-offset:2px}
+.scheme-toggle .ico{width:14px;height:14px;flex:none}
+.switcher{
+  display:flex;flex-direction:column;align-items:stretch;gap:6px;
+  padding:8px 10px 9px;border-radius:14px;
+  background:var(--chrome-switcher-bg);border:1px solid var(--chrome-accent);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--chrome-accent), transparent 70%), 0 10px 28px rgba(0,0,0,.22);
+}
+.switcher-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.switcher .lbl{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  color:var(--chrome-accent);text-transform:uppercase;font-weight:700;margin:0;
+}
+.switcher .hint{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.04em;
+  color:var(--chrome-muted);margin:0;
+}
+.switcher-btns{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.bswitch{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;padding:9px 14px;border-radius:999px;border:1px solid var(--chrome-line);background:var(--chrome-btn);color:var(--chrome-btn-fg);cursor:pointer;transition:background .2s,color .2s,border-color .2s,padding .28s var(--ease-reveal),font-size .28s var(--ease-reveal),box-shadow .2s}
+.bswitch:hover{border-color:var(--chrome-accent);color:var(--chrome-fg)}
+.bswitch[aria-pressed="true"]{background:var(--chrome-accent);color:var(--chrome-bg);border-color:var(--chrome-accent);font-weight:700;box-shadow:0 0 0 2px color-mix(in srgb, var(--chrome-accent), transparent 55%)}
+.bswitch:focus-visible{outline:2.5px solid var(--chrome-accent);outline-offset:2px}
+.chrome-coach{
+  margin:0 0 18px;padding:12px 14px;border-radius:12px;
+  border:1px dashed color-mix(in srgb, var(--chrome-accent), transparent 35%);
+  background:color-mix(in srgb, var(--chrome-accent), transparent 92%);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.chrome-coach p{margin:0;font-size:13px;line-height:1.45;color:var(--chrome-soft);max-width:62ch}
+.chrome-coach strong{color:var(--chrome-fg);font-weight:600}
+.chrome-coach-dismiss{
+  appearance:none;border:0;background:transparent;color:var(--chrome-muted);
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;padding:4px 2px;flex:none;
+}
+.chrome-coach-dismiss:hover{color:var(--chrome-accent)}
+.chrome-coach-dismiss:focus-visible{outline:2px solid var(--chrome-accent);outline-offset:2px}
+.chrome-coach.is-hidden{display:none}
+@keyframes switcherNudge{
+  0%,100%{box-shadow:0 0 0 1px color-mix(in srgb, var(--chrome-accent), transparent 70%), 0 10px 28px rgba(0,0,0,.22)}
+  50%{box-shadow:0 0 0 3px color-mix(in srgb, var(--chrome-accent), transparent 45%), 0 12px 32px rgba(0,0,0,.28)}
+}
+.switcher.is-nudge{animation:switcherNudge 1.6s ease-in-out 2}
+@media (prefers-reduced-motion:reduce){.switcher.is-nudge{animation:none}}
 .stagegrid{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
 @media(max-width:1000px){.stagegrid{grid-template-columns:1fr}}
-.stage{background:#101314;border:1px solid #1c2426;border-radius:14px;padding:16px;overflow:hidden;margin-bottom:16px}
-.stage-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7E8E90;text-transform:uppercase;margin:2px 4px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.stage-label b{color:#4AC8E8;font-weight:500;white-space:nowrap}
+.stage{background:var(--chrome-panel);border:1px solid var(--chrome-line);border-radius:14px;padding:16px;overflow:hidden;margin-bottom:16px;transition:background .35s ease,border-color .35s ease}
+.stage-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--chrome-muted);text-transform:uppercase;margin:2px 4px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stage-label b{color:var(--chrome-accent);font-weight:500;white-space:nowrap}
 /* =========================================================
    COMPONENT · IMAGE HERO — Subtitle(optional)·Title·Description·CTA·Media
    ========================================================= */
@@ -262,6 +333,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .price{font-size:20px;font-weight:800;color:var(--semantic-text-default)}
 .price-was{font-size:12px;color:var(--primitive-neutral-400);text-decoration:line-through}
 .badge{corner-shape:var(--alias-corner-shape);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;background:var(--semantic-badge-bg);color:var(--primitive-neutral-0);padding:4px 9px;border-radius:var(--alias-radius-cta);transition:background .45s,border-radius .45s}
+.badge-new{background:var(--semantic-badge-new-bg)}
 /* ===== atoms ===== */
 .btn{font-family:var(--semantic-font-body);font-size:13px;font-weight:600;padding:11px 22px;border-radius:var(--alias-radius-cta);corner-shape:var(--alias-corner-shape);cursor:pointer;border:var(--alias-btn-border) solid transparent;transition:background .18s ease,color .18s ease,border-color .18s ease,transform .12s ease;letter-spacing:var(--alias-tracking-cta);text-transform:var(--alias-transform-cta)}
 .btn:focus-visible{outline:2.5px solid var(--semantic-focus);outline-offset:2px}
@@ -395,29 +467,29 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .swatch.s3{background:var(--alias-brand-300)}.swatch.s4{background:var(--alias-brand-accent)}
 .swatch[aria-pressed="true"]{border-color:var(--primitive-neutral-900);transform:scale(1.12)}
 /* ===== inspector ===== */
-.inspector{background:#0D1112;border:1px solid #1c2426;border-radius:14px;padding:16px;font-family:'JetBrains Mono',monospace;position:sticky;top:14px}
-.inspector h3{font-size:10px;letter-spacing:.18em;color:#7E8E90;text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.ovr{color:#4AC8E8;font-size:10px}
-.chain{margin-bottom:12px;border-left:2px solid #1c2426;padding-left:11px}
-.chain .prop{font-size:11px;color:#F5F5F5;font-weight:700;margin-bottom:5px}
-.chain .hop{font-size:10px;color:#8A9A9D;line-height:1.85;display:flex;align-items:center;gap:8px}
-.chain .hop .lvl{color:#7E8E90;font-size:9px;width:62px;flex:none;text-transform:uppercase;letter-spacing:.08em}
-.chain .hop .val{color:#B8D4D8}
+.inspector{background:var(--chrome-panel-2);border:1px solid var(--chrome-line);border-radius:14px;padding:16px;font-family:'JetBrains Mono',monospace;position:sticky;top:14px;transition:background .35s ease,border-color .35s ease}
+.inspector h3{font-size:10px;letter-spacing:.18em;color:var(--chrome-muted);text-transform:uppercase;font-weight:500;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ovr{color:var(--chrome-accent);font-size:10px}
+.chain{margin-bottom:12px;border-left:2px solid var(--chrome-line);padding-left:11px}
+.chain .prop{font-size:11px;color:var(--chrome-fg);font-weight:700;margin-bottom:5px}
+.chain .hop{font-size:10px;color:var(--chrome-muted);line-height:1.85;display:flex;align-items:center;gap:8px}
+.chain .hop .lvl{color:var(--chrome-muted);font-size:9px;width:62px;flex:none;text-transform:uppercase;letter-spacing:.08em}
+.chain .hop .val{color:var(--chrome-soft)}
 .chain .hop .chipdot{width:10px;height:10px;border-radius:3px;flex:none;border:1px solid #ffffff22}
-.chain .hop.final .val{color:#4AC8E8;font-weight:700}
+.chain .hop.final .val{color:var(--chrome-accent);font-weight:700}
 .pulse{animation:pulse .5s ease}
-@keyframes pulse{0%{background:#4AC8E822}100%{background:transparent}}
-.legend{margin-top:8px;padding-top:10px;border-top:1px solid #1c2426;font-size:9.3px;color:#7E8E90;line-height:1.75}
-.legend b{color:#B8D4D8;font-weight:500}
+@keyframes pulse{0%{background:color-mix(in srgb, var(--chrome-accent), transparent 85%)}100%{background:transparent}}
+.legend{margin-top:8px;padding-top:10px;border-top:1px solid var(--chrome-line);font-size:9.3px;color:var(--chrome-muted);line-height:1.75}
+.legend b{color:var(--chrome-soft);font-weight:500}
 /* deep AA probe rows inside inspector */
-.aa-probe{margin-top:10px;padding-top:10px;border-top:1px solid #1c2426}
-.aa-probe h4{font-size:10px;letter-spacing:.14em;color:#7E8E90;text-transform:uppercase;font-weight:500;margin-bottom:8px}
-.aa-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;line-height:1.5;margin-bottom:6px;color:#B8D4D8}
+.aa-probe{margin-top:10px;padding-top:10px;border-top:1px solid var(--chrome-line)}
+.aa-probe h4{font-size:10px;letter-spacing:.14em;color:var(--chrome-muted);text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.aa-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;line-height:1.5;margin-bottom:6px;color:var(--chrome-soft)}
 .aa-row .pair{display:flex;align-items:center;gap:6px;min-width:0}
 .aa-row .sw{width:12px;height:12px;border-radius:3px;border:1px solid #ffffff22;flex:none}
-.aa-row .ratio{font-weight:700;color:#4AC8E8;font-variant-numeric:tabular-nums}
+.aa-row .ratio{font-weight:700;color:var(--chrome-accent);font-variant-numeric:tabular-nums}
 .aa-row .ratio.fail{color:#FF8A7A}
-.aa-row .floor{color:#7E8E90;font-size:9px}
+.aa-row .floor{color:var(--chrome-muted);font-size:9px}
 /* sticky drift / compliance panel */
 .audit-bar{
   position:fixed;z-index:80;left:50%;bottom:16px;transform:translateX(-50%);
@@ -469,21 +541,39 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .site-sig{
   margin:0;padding:20px 28px 88px;text-align:center;
   font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;
-  color:#7E8E90;line-height:1.5;background:#0A0B0C;
+  color:var(--chrome-muted);line-height:1.5;background:var(--chrome-bg);transition:background .35s ease,color .35s ease;
 }
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc,.art-deg .a-core{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
+.product-card,.product-card h3,.product-card .pdesc,.product-card .price{transition:background .35s ease,color .35s ease,border-color .35s ease}
+.cbox{transition:background .35s ease}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc,.art-deg .a-core{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.scheme-toggle,.bswitch,.switcher.is-nudge{transition:none!important;animation:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
 <div class="chrome">
   <div class="chrome-head">
     <div class="mark"><span class="sq"></span>Theme, don't fork · live token demo</div>
-    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, or DGE. Keys 1–3 also switch.">
-      <span class="lbl" id="brandModeLbl">Brand mode</span>
-      <button type="button" class="bswitch" data-b="aurora" aria-pressed="true" aria-describedby="brandModeLbl">Aurora</button>
-      <button type="button" class="bswitch" data-b="ember"  aria-pressed="false" aria-describedby="brandModeLbl">Ember</button>
-      <button type="button" class="bswitch" data-b="deg" title="Department of Government Enablement" aria-pressed="false" aria-describedby="brandModeLbl">DGE</button>
+    <div class="chrome-actions">
+      <button type="button" class="scheme-toggle" id="schemeToggle" aria-pressed="true" title="Toggle light / dark scheme">
+        <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.2a.8.8 0 0 1 .8.8v1.1a.8.8 0 1 1-1.6 0V2a.8.8 0 0 1 .8-.8zm0 10.7a.8.8 0 0 1 .8.8V14a.8.8 0 1 1-1.6 0v-1.3a.8.8 0 0 1 .8-.8zM2 7.2a.8.8 0 0 1 .8-.8h1.1a.8.8 0 1 1 0 1.6H2.8A.8.8 0 0 1 2 7.2zm10.1 0a.8.8 0 0 1 .8-.8H14a.8.8 0 1 1 0 1.6h-1.1a.8.8 0 0 1-.8-.8zM3.4 3.4a.8.8 0 0 1 1.13 0l.78.78a.8.8 0 1 1-1.13 1.13l-.78-.78a.8.8 0 0 1 0-1.13zm7.16 7.16a.8.8 0 0 1 1.13 0l.78.78a.8.8 0 1 1-1.13 1.13l-.78-.78a.8.8 0 0 1 0-1.13zM12.6 3.4a.8.8 0 0 1 0 1.13l-.78.78a.8.8 0 1 1-1.13-1.13l.78-.78a.8.8 0 0 1 1.13 0zM5.44 10.56a.8.8 0 0 1 0 1.13l-.78.78A.8.8 0 1 1 3.53 11.34l.78-.78a.8.8 0 0 1 1.13 0zM8 4.6A3.4 3.4 0 1 1 8 11.4 3.4 3.4 0 0 1 8 4.6z"/></svg>
+        <span id="schemeToggleLabel">Dark</span>
+      </button>
+      <div class="switcher is-nudge" id="brandSwitcher" role="group" aria-label="Switch brand — remorphs the whole system. Keys 1–3 also switch.">
+        <div class="switcher-top">
+          <span class="lbl" id="brandModeLbl">Switch brand</span>
+          <span class="hint" id="brandHint">Click · keys 1–3</span>
+        </div>
+        <div class="switcher-btns">
+          <button type="button" class="bswitch" data-b="aurora" aria-pressed="true" aria-describedby="brandModeLbl brandHint">Aurora</button>
+          <button type="button" class="bswitch" data-b="ember"  aria-pressed="false" aria-describedby="brandModeLbl brandHint">Ember</button>
+          <button type="button" class="bswitch" data-b="deg" title="Department of Government Enablement" aria-pressed="false" aria-describedby="brandModeLbl brandHint">DGE</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="chrome-coach" id="chromeCoach" role="status">
+    <p><strong>First move:</strong> use <strong>Switch brand</strong> (top right) to remorph colour, type, shape, and art — same components, zero overrides. Toggle <strong>Dark / Light</strong> for surface scheme.</p>
+    <button type="button" class="chrome-coach-dismiss" id="chromeCoachDismiss" aria-label="Dismiss tip">Got it</button>
   </div>
 
   <div class="stagegrid">
@@ -595,7 +685,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
             <div class="pbody">
               <h3>Starter kit</h3>
               <p class="pdesc">Everything to begin — one device, two refills.</p>
-              <div class="prow"><span class="price">£24</span><span class="price-was">£39</span><span class="badge">Intro offer</span></div>
+              <div class="prow"><span class="price">£24</span><span class="price-was">£39</span><span class="badge badge-new">New</span><span class="badge">Intro offer</span></div>
               <button class="btn btn-primary btn-block">Add to basket</button>
             </div>
           </article>
@@ -955,11 +1045,26 @@ const buttons=[...document.querySelectorAll('.bswitch')];
     document.querySelectorAll('[data-res-raw]').forEach(el=>{ el.textContent=resolveVar(el.getAttribute('data-res-raw'))||'—'; });
     document.querySelectorAll('.chipdot').forEach(el=>{ el.style.background=resolveVar(el.getAttribute('data-var')); });
     const mode=root.getAttribute('data-brand');
-    document.getElementById('modename').textContent='mode: '+mode;
+    const scheme=root.getAttribute('data-scheme')||'dark';
+    document.getElementById('modename').textContent='mode: '+mode+' · '+scheme;
     document.getElementById('patname').textContent='pattern: '+resolveVar('--alias-pattern-name');
     document.getElementById('assetname').textContent='brand.art.'+mode;
     document.getElementById('fontname').textContent=resolveVar('--alias-font-name');
     refreshAudit();
+  }
+
+  function setScheme(scheme){
+    const next=scheme==='light'?'light':'dark';
+    root.setAttribute('data-scheme', next);
+    const btn=document.getElementById('schemeToggle');
+    const lbl=document.getElementById('schemeToggleLabel');
+    if(btn){
+      btn.setAttribute('aria-pressed', String(next==='dark'));
+      btn.title=next==='dark'?'Switch to light scheme':'Switch to dark scheme';
+    }
+    if(lbl) lbl.textContent=next==='dark'?'Dark':'Light';
+    try{ localStorage.setItem('tdf-scheme', next); }catch(e){}
+    refresh();
   }
 
   function setBrand(brand, btn){
@@ -969,6 +1074,13 @@ const buttons=[...document.querySelectorAll('.bswitch')];
       x.setAttribute('aria-pressed', String(on));
       x.tabIndex=on?0:-1;
     });
+    const switcher=document.getElementById('brandSwitcher');
+    if(switcher) switcher.classList.remove('is-nudge');
+    const coach=document.getElementById('chromeCoach');
+    if(coach && !coach.classList.contains('is-hidden')){
+      coach.classList.add('is-hidden');
+      try{ localStorage.setItem('tdf-coach-dismissed','1'); }catch(e){}
+    }
     refresh();
     document.querySelectorAll('.chain').forEach(c=>{c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');});
     document.querySelectorAll('.image-hero .media svg.art > *, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
@@ -1016,6 +1128,37 @@ const buttons=[...document.querySelectorAll('.bswitch')];
     head.addEventListener('click',e=>{ if(e.target===toggle) return; flip(); });
     head.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flip(); } });
     toggle.addEventListener('click',e=>{ e.stopPropagation(); flip(); });
+  })();
+
+  // color scheme toggle (orthogonal to brand)
+  (function(){
+    const toggle=document.getElementById('schemeToggle');
+    let stored=null;
+    try{ stored=localStorage.getItem('tdf-scheme'); }catch(e){}
+    if(stored==='light'||stored==='dark') setScheme(stored);
+    else setScheme(root.getAttribute('data-scheme')||'dark');
+    if(toggle){
+      toggle.addEventListener('click',()=>{
+        const cur=root.getAttribute('data-scheme')||'dark';
+        setScheme(cur==='dark'?'light':'dark');
+      });
+    }
+  })();
+
+  // FTU coach tip
+  (function(){
+    const coach=document.getElementById('chromeCoach');
+    const dismiss=document.getElementById('chromeCoachDismiss');
+    if(!coach) return;
+    let dismissed=false;
+    try{ dismissed=localStorage.getItem('tdf-coach-dismissed')==='1'; }catch(e){}
+    if(dismissed) coach.classList.add('is-hidden');
+    if(dismiss){
+      dismiss.addEventListener('click',()=>{
+        coach.classList.add('is-hidden');
+        try{ localStorage.setItem('tdf-coach-dismissed','1'); }catch(e){}
+      });
+    }
   })();
 
   refresh();
