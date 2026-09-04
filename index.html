@@ -107,7 +107,7 @@
 }
 /* ===== Ronin chrome ===== */
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:96px}
 .chrome{max-width:1280px;margin:0 auto;padding:26px 30px 40px}
 /* sticky chrome — condenses to a switcher-only bar on scroll */
 .chrome-head{position:sticky;top:0;z-index:60;display:flex;justify-content:space-between;align-items:center;gap:16px;
@@ -137,6 +137,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .bswitch:hover{border-color:#4AC8E8;color:#fff}
 .bswitch[aria-pressed="true"]{background:#4AC8E8;color:#0A0B0C;border-color:#4AC8E8;font-weight:700}
 .bswitch:focus-visible{outline:2.5px solid #4AC8E8;outline-offset:2px}
+.bswitch[aria-pressed="false"]{color:#C5DADC} /* AA on #111517 chrome */
 .stagegrid{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start}
 @media(max-width:1000px){.stagegrid{grid-template-columns:1fr}}
 .stage{background:#101314;border:1px solid #1c2426;border-radius:14px;padding:16px;overflow:hidden;margin-bottom:16px}
@@ -362,18 +363,75 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 @keyframes pulse{0%{background:#4AC8E822}100%{background:transparent}}
 .legend{margin-top:8px;padding-top:10px;border-top:1px solid #1c2426;font-size:9.3px;color:#7E8E90;line-height:1.75}
 .legend b{color:#B8D4D8;font-weight:500}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} }
+/* deep AA probe rows inside inspector */
+.aa-probe{margin-top:10px;padding-top:10px;border-top:1px solid #1c2426}
+.aa-probe h4{font-size:10px;letter-spacing:.14em;color:#7E8E90;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.aa-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;line-height:1.5;margin-bottom:6px;color:#B8D4D8}
+.aa-row .pair{display:flex;align-items:center;gap:6px;min-width:0}
+.aa-row .sw{width:12px;height:12px;border-radius:3px;border:1px solid #ffffff22;flex:none}
+.aa-row .ratio{font-weight:700;color:#4AC8E8;font-variant-numeric:tabular-nums}
+.aa-row .ratio.fail{color:#FF8A7A}
+.aa-row .floor{color:#7E8E90;font-size:9px}
+/* sticky drift / compliance panel */
+.audit-bar{
+  position:fixed;z-index:80;left:50%;bottom:16px;transform:translateX(-50%);
+  width:min(960px, calc(100% - 24px));
+  background:#0D1112;color:#EAF6F3;border-radius:14px;
+  box-shadow:0 16px 40px rgba(0,0,0,.45);
+  border:1px solid color-mix(in srgb, #4AC8E8, transparent 55%);
+  overflow:hidden;font-family:'Poppins',system-ui,sans-serif;
+}
+.audit-bar-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 14px;cursor:pointer;user-select:none;
+}
+.audit-bar-head strong{font-size:12.5px;font-weight:600;letter-spacing:.02em;color:#F5F5F5}
+.audit-bar-head .pulse{
+  width:8px;height:8px;border-radius:50%;background:#4AC8E8;
+  box-shadow:0 0 0 0 rgba(74,200,232,.55);animation:auditPulse 2s ease-out infinite;flex:none;
+}
+@keyframes auditPulse{
+  0%{box-shadow:0 0 0 0 rgba(74,200,232,.45)}
+  70%{box-shadow:0 0 0 8px rgba(74,200,232,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,200,232,0)}
+}
+.audit-metrics{
+  display:flex;flex-wrap:wrap;gap:8px 14px;font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:#C5DADC;
+}
+.audit-metrics b{color:#4AC8E8;font-weight:600}
+.audit-metrics b.fail{color:#FF8A7A}
+.audit-toggle{
+  appearance:none;border:0;background:transparent;color:#4AC8E8;
+  font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 2px;
+}
+.audit-toggle:focus-visible{outline:2px solid #4AC8E8;outline-offset:2px}
+.audit-drawer{
+  display:none;border-top:1px solid color-mix(in srgb, #4AC8E8, transparent 70%);
+  padding:12px 14px 14px;background:#0A1618;
+}
+.audit-bar.is-open .audit-drawer{display:block}
+.audit-drawer p{margin:0 0 10px;font-size:12.5px;line-height:1.5;color:#C5DADC}
+.audit-drawer p b{color:#F5F5F5;font-weight:600}
+.audit-chips{display:flex;flex-wrap:wrap;gap:8px}
+.audit-chip{
+  background:#111517;border:1px solid #1c2426;border-radius:10px;padding:8px 10px;min-width:120px;
+}
+.audit-chip .ct{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8E90;margin-bottom:2px}
+.audit-chip .cd{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4AC8E8}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-atlas .a-acc,.art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
 <div class="chrome">
   <div class="chrome-head">
     <div class="mark"><span class="sq"></span>Theme, don't fork · live token demo</div>
-    <div class="switcher" role="group" aria-label="Brand mode">
-      <span class="lbl">Brand mode</span>
-      <button class="bswitch" data-b="aurora" aria-pressed="true">Aurora</button>
-      <button class="bswitch" data-b="ember"  aria-pressed="false">Ember</button>
-      <button class="bswitch" data-b="atlas"  aria-pressed="false">Atlas</button>
+    <div class="switcher" role="group" aria-label="Brand mode — Aurora, Ember, or Atlas. Keys 1–3 also switch.">
+      <span class="lbl" id="brandModeLbl">Brand mode</span>
+      <button type="button" class="bswitch" data-b="aurora" aria-pressed="true" aria-describedby="brandModeLbl">Aurora</button>
+      <button type="button" class="bswitch" data-b="ember"  aria-pressed="false" aria-describedby="brandModeLbl">Ember</button>
+      <button type="button" class="bswitch" data-b="atlas"  aria-pressed="false" aria-describedby="brandModeLbl">Atlas</button>
     </div>
   </div>
 
@@ -652,7 +710,56 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
         Six layers: <b>brand → semantic → alias → primitive → component → pattern</b>.<br>
         One switch remaps <b>alias → primitive</b>: colour, shape, pattern, typeface and its optical scale, even the artwork. Components never change — <b>0 overrides, by construction.</b>
       </div>
+      <div class="aa-probe" aria-live="polite">
+        <h4>Deep AA probe · live ratios</h4>
+        <div class="aa-row" data-aa="onbrand">
+          <span class="pair"><span class="sw" data-sw-fg></span><span class="sw" data-sw-bg></span> text on hero</span>
+          <span><span class="ratio" data-aa-ratio>—</span> <span class="floor">≥4.5</span></span>
+        </div>
+        <div class="aa-row" data-aa="soft">
+          <span class="pair"><span class="sw" data-sw-fg></span><span class="sw" data-sw-bg></span> soft on hero</span>
+          <span><span class="ratio" data-aa-ratio>—</span> <span class="floor">≥4.5</span></span>
+        </div>
+        <div class="aa-row" data-aa="cta">
+          <span class="pair"><span class="sw" data-sw-fg></span><span class="sw" data-sw-bg></span> primary CTA</span>
+          <span><span class="ratio" data-aa-ratio>—</span> <span class="floor">≥4.5</span></span>
+        </div>
+        <div class="aa-row" data-aa="hover">
+          <span class="pair"><span class="sw" data-sw-fg></span><span class="sw" data-sw-bg></span> CTA hover</span>
+          <span><span class="ratio" data-aa-ratio>—</span> <span class="floor">≥4.5</span></span>
+        </div>
+        <div class="aa-row" data-aa="card">
+          <span class="pair"><span class="sw" data-sw-fg></span><span class="sw" data-sw-bg></span> card body</span>
+          <span><span class="ratio" data-aa-ratio>—</span> <span class="floor">≥4.5</span></span>
+        </div>
+      </div>
     </aside>
+  </div>
+</div>
+
+<div class="audit-bar is-open" id="auditBar" role="region" aria-label="Token-drift and compliance check">
+  <div class="audit-bar-head" id="auditHead" role="button" tabindex="0" aria-expanded="true" aria-controls="auditDrawer">
+    <div style="display:flex;align-items:center;gap:10px;min-width:0">
+      <span class="pulse" aria-hidden="true"></span>
+      <strong>Token-Drift &amp; Compliance Check</strong>
+    </div>
+    <div class="audit-metrics" id="auditMetrics" role="status">
+      <span><b id="mViolations">0</b> hard-coded violations</span>
+      <span><b id="mCoverage">100%</b> token coverage</span>
+      <span><b id="mWcag">AA</b> WCAG</span>
+      <span><b id="mA11y">pass</b> a11y-audit</span>
+    </div>
+    <button type="button" class="audit-toggle" id="auditToggle" aria-hidden="true" tabindex="-1">Collapse</button>
+  </div>
+  <div class="audit-drawer" id="auditDrawer">
+    <p>Live governance from <b>tokenize</b>, <b>contrast-audit</b>, <b>a11y-audit</b>, and <b>entity-audit</b> —
+      AA floors hard-fail Verify; brand switch must clear before human sign-off.</p>
+    <div class="audit-chips">
+      <div class="audit-chip"><div class="ct">Brand</div><div class="cd" id="mEntity">aurora</div></div>
+      <div class="audit-chip"><div class="ct">Drift</div><div class="cd" id="mDrift">none detected</div></div>
+      <div class="audit-chip"><div class="ct">AA floors</div><div class="cd" id="mFloors">4.5:1 text · 3:1 UI</div></div>
+      <div class="audit-chip"><div class="ct">Last audit</div><div class="cd" id="mStamp">—</div></div>
+    </div>
   </div>
 </div>
 
@@ -660,7 +767,133 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 (function(){
   const root=document.documentElement;
   const buttons=[...document.querySelectorAll('.bswitch')];
+
   function resolveVar(n){ return getComputedStyle(root).getPropertyValue(n).trim().replace(/^"|"$/g,''); }
+
+  function parseColor(raw){
+    if(!raw) return null;
+    raw=raw.trim();
+    if(raw.startsWith('#')){
+      let h=raw.slice(1);
+      if(h.length===3) h=h.split('').map(c=>c+c).join('');
+      if(h.length!==6) return null;
+      return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+    }
+    const m=raw.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/i);
+    if(m) return [+m[1], +m[2], +m[3]];
+    return null;
+  }
+  function relLum(rgb){
+    const f=c=>{ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); };
+    return 0.2126*f(rgb[0])+0.7152*f(rgb[1])+0.0722*f(rgb[2]);
+  }
+  function contrastRatio(a,b){
+    const A=parseColor(a), B=parseColor(b);
+    if(!A||!B) return null;
+    const L1=relLum(A), L2=relLum(B);
+    const hi=Math.max(L1,L2), lo=Math.min(L1,L2);
+    return (hi+0.05)/(lo+0.05);
+  }
+  function stamp(){
+    return new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  }
+
+  const AA_PAIRS = {
+    onbrand: { fg:'--semantic-text-onbrand', bg:'--semantic-surface-hero', floor:4.5 },
+    soft:    { fg:'--semantic-text-onbrand-soft', bg:'--semantic-surface-hero', floor:4.5 },
+    cta:     { fg:'--semantic-action-primary-text', bg:'--semantic-action-primary', floor:4.5 },
+    hover:   { fg:'--semantic-action-primary-hover-text', bg:'--semantic-action-primary-hover-bg', floor:4.5 },
+    card:    { fg:'--semantic-text-default', bg:'--semantic-surface-card', floor:4.5 },
+  };
+
+  function resolveColor(varName){
+    const probe=document.createElement('span');
+    probe.style.cssText='position:absolute;left:-9999px;top:0;color:var('+varName+');background:var('+varName+')';
+    document.body.appendChild(probe);
+    const c=getComputedStyle(probe).color;
+    probe.remove();
+    return c;
+  }
+
+  function refreshAaProbe(){
+    let worst=null, fails=[];
+    Object.entries(AA_PAIRS).forEach(([key, cfg])=>{
+      const row=document.querySelector('.aa-row[data-aa="'+key+'"]');
+      if(!row) return;
+      const fg=resolveColor(cfg.fg), bg=resolveColor(cfg.bg);
+      const r=contrastRatio(fg, bg);
+      const ratioEl=row.querySelector('[data-aa-ratio]');
+      const swFg=row.querySelector('[data-sw-fg]');
+      const swBg=row.querySelector('[data-sw-bg]');
+      if(swFg) swFg.style.background=fg;
+      if(swBg) swBg.style.background=bg;
+      if(r==null){ ratioEl.textContent='—'; ratioEl.classList.remove('fail'); return; }
+      ratioEl.textContent=r.toFixed(2)+':1';
+      const ok=r>=cfg.floor;
+      ratioEl.classList.toggle('fail', !ok);
+      if(!ok) fails.push(key+' '+r.toFixed(2)+' < '+cfg.floor);
+      if(worst==null || r<worst) worst=r;
+    });
+    return { fails, worst };
+  }
+
+  function verifyA11yRuntime(){
+    const fails=[];
+    if(!buttons.every(b=>b.hasAttribute('aria-pressed'))) fails.push('aria-pressed missing on brand switch');
+    const pressed=buttons.filter(b=>b.getAttribute('aria-pressed')==='true');
+    if(pressed.length!==1) fails.push('exactly one brand must be pressed');
+    const region=document.getElementById('auditBar');
+    if(!region || region.getAttribute('role')!=='region') fails.push('audit bar landmark missing');
+    const inspector=document.querySelector('.inspector');
+    if(!inspector || !inspector.getAttribute('aria-label')) fails.push('inspector landmark missing');
+    const hero=document.querySelector('.image-hero');
+    if(hero && !hero.getAttribute('aria-label')) fails.push('hero landmark missing');
+    return { ok:fails.length===0, fails };
+  }
+
+  function countHardCodedViolations(){
+    // Structural check: hero/CTA surfaces must resolve through semantic tokens (not empty).
+    const required=['--semantic-surface-hero','--semantic-action-primary','--semantic-text-onbrand','--alias-brand-accent'];
+    let miss=0;
+    required.forEach(n=>{ if(!resolveVar(n)) miss++; });
+    return miss;
+  }
+
+  function refreshAudit(){
+    const aa=refreshAaProbe();
+    const a11y=verifyA11yRuntime();
+    const mode=root.getAttribute('data-brand')||'aurora';
+    const violations=countHardCodedViolations();
+    document.getElementById('mViolations').textContent=String(violations);
+    document.getElementById('mCoverage').textContent=violations===0?'100%':'partial';
+    const wcagEl=document.getElementById('mWcag');
+    const a11yEl=document.getElementById('mA11y');
+    const floorsEl=document.getElementById('mFloors');
+    const driftEl=document.getElementById('mDrift');
+    if(aa.fails.length){
+      wcagEl.textContent='FAIL';
+      wcagEl.classList.add('fail');
+      floorsEl.textContent=aa.fails[0];
+      driftEl.textContent='AA hard-fail · Verify blocked';
+    } else {
+      wcagEl.textContent='AA';
+      wcagEl.classList.remove('fail');
+      floorsEl.textContent='4.5:1 text · clear'+(aa.worst!=null?' · min '+aa.worst.toFixed(2):'');
+      driftEl.textContent='none detected';
+    }
+    a11yEl.textContent=a11y.ok?'pass':'fail';
+    a11yEl.classList.toggle('fail', !a11y.ok);
+    if(!a11y.ok) driftEl.textContent='a11y-audit: '+a11y.fails[0];
+    document.getElementById('mEntity').textContent=mode;
+    document.getElementById('mStamp').textContent=stamp();
+    const metrics=document.getElementById('auditMetrics');
+    metrics.style.opacity='0.55';
+    requestAnimationFrame(()=>{
+      metrics.style.transition='opacity .28s ease';
+      metrics.style.opacity='1';
+    });
+  }
+
   function refresh(){
     document.querySelectorAll('[data-res]').forEach(el=>{ el.textContent=resolveVar(el.getAttribute('data-res'))||'—'; });
     document.querySelectorAll('[data-res-raw]').forEach(el=>{ el.textContent=resolveVar(el.getAttribute('data-res-raw'))||'—'; });
@@ -670,21 +903,65 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
     document.getElementById('patname').textContent='pattern: '+resolveVar('--alias-pattern-name');
     document.getElementById('assetname').textContent='brand.art.'+mode;
     document.getElementById('fontname').textContent=resolveVar('--alias-font-name');
+    refreshAudit();
   }
-  buttons.forEach(b=>b.addEventListener('click',()=>{
-    root.setAttribute('data-brand', b.dataset.b);
-    buttons.forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+
+  function setBrand(brand, btn){
+    root.setAttribute('data-brand', brand);
+    buttons.forEach(x=>{
+      const on=x===btn;
+      x.setAttribute('aria-pressed', String(on));
+      x.tabIndex=on?0:-1;
+    });
     refresh();
     document.querySelectorAll('.chain').forEach(c=>{c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');});
-    const art=document.querySelector('.image-hero .media svg.art:not([style*="none"])');
     document.querySelectorAll('.image-hero .media svg.art > *, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
       el.style.animation='none'; void el.offsetWidth; el.style.animation='';
     });
-  }));
+  }
+
+  buttons.forEach((b,i)=>{
+    b.tabIndex=b.getAttribute('aria-pressed')==='true'?0:-1;
+    b.addEventListener('click',()=> setBrand(b.dataset.b, b));
+    b.addEventListener('keydown',e=>{
+      const order=['aurora','ember','atlas'];
+      let idx=order.indexOf(b.dataset.b);
+      if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); idx=(idx+1)%order.length; }
+      else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); idx=(idx-1+order.length)%order.length; }
+      else if(e.key==='Home'){ e.preventDefault(); idx=0; }
+      else if(e.key==='End'){ e.preventDefault(); idx=order.length-1; }
+      else return;
+      const next=buttons.find(x=>x.dataset.b===order[idx]);
+      if(next){ setBrand(next.dataset.b, next); next.focus(); }
+    });
+  });
+
   addEventListener('keydown',e=>{
     const map={'1':'aurora','2':'ember','3':'atlas'};
-    if(map[e.key]){ const btn=buttons.find(b=>b.dataset.b===map[e.key]); btn && btn.click(); }
+    if(map[e.key] && !e.metaKey && !e.ctrlKey && !e.altKey){
+      const t=e.target;
+      if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable)) return;
+      const btn=buttons.find(b=>b.dataset.b===map[e.key]);
+      if(btn) setBrand(btn.dataset.b, btn);
+    }
   });
+
+  // compliance panel collapse
+  (function(){
+    const bar=document.getElementById('auditBar');
+    const head=document.getElementById('auditHead');
+    const toggle=document.getElementById('auditToggle');
+    function setOpen(open){
+      bar.classList.toggle('is-open', open);
+      head.setAttribute('aria-expanded', String(open));
+      toggle.textContent=open?'Collapse':'Expand';
+    }
+    function flip(){ setOpen(!bar.classList.contains('is-open')); }
+    head.addEventListener('click',e=>{ if(e.target===toggle) return; flip(); });
+    head.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flip(); } });
+    toggle.addEventListener('click',e=>{ e.stopPropagation(); flip(); });
+  })();
+
   refresh();
 })();
 
