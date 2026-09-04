@@ -173,7 +173,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 .media .art{display:none}
 [data-brand="aurora"] .art-aurora{display:block}
 [data-brand="ember"]  .art-ember{display:block}
-[data-brand="deg"]    .art-deg{display:block}
+[data-brand="deg"]    .art-deg{display:grid}
 .art .a-main{fill:var(--semantic-art-base)}.art .a-deep{fill:var(--alias-brand-600)}.art .a-mid{fill:var(--alias-brand-300)}.art .a-acc{fill:var(--alias-brand-accent)}
 .art [class]{transition:fill .45s}
 /* Aurora: the lower cube slides up into the upper one, then settles */
@@ -190,13 +190,66 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .art-ember .a-jet{transform-box:view-box;transform-origin:100px 132px;
   animation:jet .52s ease-in-out infinite;animation-delay:1.2s}
-/* DEG: accent bar draws as a solid administrative rule */
-@keyframes degRule{
-  0%,100%{transform:scaleX(1)}
-  50%{transform:scaleX(.92)}
+/* DEG · AI resolve: geometric system mark → official emblem */
+.art-deg{
+  width:min(72%,270px);aspect-ratio:1;place-items:center;position:relative;
+  filter:drop-shadow(0 16px 28px rgba(0,0,0,.35));
 }
-.art-deg .a-acc{transform-box:view-box;transform-origin:100px 148px;
-  animation:degRule 3.6s var(--ease-reveal) infinite;animation-delay:1.1s}
+.art-deg .deg-layer{position:absolute;inset:0;display:grid;place-items:center}
+.art-deg .deg-geo{width:86%;height:auto}
+.art-deg .deg-emblem{
+  width:78%;height:78%;object-fit:contain;object-position:center;
+  opacity:0;will-change:opacity,transform,filter;
+}
+.art-deg .deg-scan{
+  position:absolute;left:8%;right:8%;height:18%;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--alias-brand-accent), transparent 55%) 45%,
+    color-mix(in srgb, var(--alias-brand-300), transparent 35%) 55%,
+    transparent 100%);
+  opacity:0;pointer-events:none;mix-blend-mode:screen;
+  filter:blur(0.5px);
+}
+.art-deg .deg-grid{
+  position:absolute;inset:12%;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--alias-brand-300), transparent 70%) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--alias-brand-300), transparent 70%) 1px, transparent 1px);
+  background-size:12px 12px;
+  opacity:0;mask-image:radial-gradient(circle at 50% 50%, #000 35%, transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 35%, transparent 78%);
+  pointer-events:none;
+}
+@keyframes degGeoResolve{
+  0%,10%{opacity:1;transform:scale(1) rotate(0deg);filter:blur(0) brightness(1)}
+  24%{opacity:.55;transform:scale(.94) rotate(2deg);filter:blur(0) brightness(1.15)}
+  36%{opacity:0;transform:scale(.62) rotate(12deg);filter:blur(8px) brightness(1.6)}
+  36.01%,86%{opacity:0;transform:scale(.62)}
+  100%{opacity:1;transform:scale(1) rotate(0deg);filter:blur(0) brightness(1)}
+}
+@keyframes degEmblemResolve{
+  0%,26%{opacity:0;transform:scale(.9);filter:blur(12px) brightness(1.8)}
+  40%{opacity:1;transform:scale(1.02);filter:blur(0) brightness(1.05)}
+  48%,76%{opacity:1;transform:scale(1);filter:none}
+  90%,100%{opacity:0;transform:scale(1.05);filter:blur(10px) brightness(1.4)}
+}
+@keyframes degScanSweep{
+  0%,14%{transform:translateY(-130%);opacity:0}
+  18%{opacity:.95}
+  34%{transform:translateY(130%);opacity:0}
+  100%{opacity:0}
+}
+@keyframes degGridPulse{
+  0%,16%{opacity:0}
+  24%{opacity:.55}
+  38%{opacity:.15}
+  48%,100%{opacity:0}
+}
+.art-deg .deg-geo{animation:degGeoResolve 8.5s var(--ease-reveal) infinite}
+.art-deg .deg-emblem{animation:degEmblemResolve 8.5s var(--ease-reveal) infinite}
+.art-deg .deg-scan{animation:degScanSweep 8.5s var(--ease-reveal) infinite}
+.art-deg .deg-grid{animation:degGridPulse 8.5s var(--ease-reveal) infinite}
 /* motion: one content role, one entrance — from the portable motion system */
 @keyframes revHeadline{from{opacity:0;transform:translateY(10px) scale(.975)}to{opacity:1;transform:none}}
 @keyframes revBody{from{opacity:0;transform:translateY(var(--dist-text))}to{opacity:1;transform:none}}
@@ -432,7 +485,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .audit-chip .ct{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8E90;margin-bottom:2px}
 .audit-chip .cd{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4AC8E8}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet,.art-deg .a-acc{animation:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .art-deg .deg-geo,.art-deg .deg-scan,.art-deg .deg-grid{opacity:0!important} .art-deg .deg-emblem{opacity:1!important;transform:none!important;filter:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
@@ -486,14 +539,23 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <path class="a-mid" d="M112 108 L136 140 L112 132 Z"/>
               <g><path class="a-jet a-acc" d="M94 132 L106 132 L100 158 Z"/></g>
             </svg>
-            <svg class="art art-deg" viewBox="0 0 200 200">
-              <!-- structured gov portal mark: nested squares + flamingo rule -->
-              <rect class="a-deep" x="36" y="36" width="128" height="128"/>
-              <rect class="a-main" x="52" y="52" width="96" height="96"/>
-              <rect class="a-mid"  x="68" y="68" width="64" height="64"/>
-              <rect class="a-deep" x="84" y="84" width="32" height="32"/>
-              <rect class="a-acc"  x="52" y="148" width="96" height="8"/>
-            </svg>
+            <div class="art art-deg" aria-hidden="true">
+              <div class="deg-layer">
+                <svg class="deg-geo" viewBox="0 0 200 200">
+                  <!-- structured system mark — resolves into the official emblem -->
+                  <rect class="a-deep" x="36" y="36" width="128" height="128"/>
+                  <rect class="a-main" x="52" y="52" width="96" height="96"/>
+                  <rect class="a-mid"  x="68" y="68" width="64" height="64"/>
+                  <rect class="a-deep" x="84" y="84" width="32" height="32"/>
+                  <rect class="a-acc"  x="52" y="148" width="96" height="8"/>
+                </svg>
+              </div>
+              <div class="deg-layer deg-grid" aria-hidden="true"></div>
+              <div class="deg-layer"><div class="deg-scan"></div></div>
+              <div class="deg-layer">
+                <img class="deg-emblem" src="assets/dge-emblem.svg" alt="" width="200" height="200" decoding="async">
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -920,7 +982,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
     });
     refresh();
     document.querySelectorAll('.chain').forEach(c=>{c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');});
-    document.querySelectorAll('.image-hero .media svg.art > *, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
+    document.querySelectorAll('.image-hero .media svg.art > *, .art-deg .deg-geo, .art-deg .deg-emblem, .art-deg .deg-scan, .art-deg .deg-grid, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
       el.style.animation='none'; void el.offsetWidth; el.style.animation='';
     });
   }
