@@ -5,7 +5,31 @@
   "architecture": {
     "layers": ["brand (data-brand attribute)", "scheme (data-scheme light|dark)", "semantic (--semantic-*)", "alias (--alias-*)", "primitive (--primitive-*)"],
     "motionPrimitives": "Global, non-brand-scoped constants (--dur-*, --ease-*, --dist-*, --stagger, --seq). Motion does not vary by brand in this system — this is a deliberate 4th category, not a taxonomy gap. See Phase 1 spec for the reasoning.",
-    "colorScheme": "data-scheme is orthogonal to data-brand. Brand remaps alias→primitive; scheme remaps neutral semantics (surface-card, text-default/soft) and harness chrome vars. Components still consume --semantic-* / --alias-* only."
+    "colorScheme": "data-scheme is orthogonal to data-brand. Default is dark (the original natural page). Brand remaps alias→primitive; scheme remaps ALL neutral product semantics (surface-card/inset, border-subtle, control-fill, art-base, text-default/soft/muted, secondary-hover, feedback-*) plus harness --chrome-* vars. Components still consume --semantic-* / --alias-* only — never scheme-specific selectors for product surfaces."
+  },
+  "schemeTokens": {
+    "note": "These semantics exist so inset wells, toasts, controls, and labels flip with scheme the same way surface-card does. Do not bind components to --primitive-neutral-* or raw #hex for those roles.",
+    "remappedByScheme": [
+      "semantic-surface-card",
+      "semantic-surface-inset",
+      "semantic-border-subtle",
+      "semantic-control-fill",
+      "semantic-art-base",
+      "semantic-text-default",
+      "semantic-text-soft",
+      "semantic-text-muted",
+      "semantic-action-secondary-hover-bg",
+      "semantic-action-secondary-hover-text",
+      "semantic-feedback-success",
+      "semantic-feedback-error",
+      "semantic-feedback-warning",
+      "semantic-feedback-info"
+    ],
+    "contrastNotes": {
+      "dark.card": "text-default #F2F8FA on surface-card #161A1C ≈15:1; text-soft #B8D4D8 ≈9.5:1; text-muted #8A9A9D ≥3:1 UI labels",
+      "light.card": "text-default/soft via neutral-900/700 on neutral-0 — prior AA pairs",
+      "on-control": "semantic-on-control stays neutral-0 (white glyphs on filled brand controls) in both schemes — not scheme-remapped"
+    }
   },
   "boundary": {
     "note": "The 'tokens only, zero overrides' contract governs the COMPONENT LIBRARY — the reusable system being sold. It does NOT govern the demo harness (the browser-chrome mockup, the token inspector, the stage scaffolding) that exists to SHOW the system. Holding the harness to the contract is a category error. This boundary is declared here so the guardrail reads it from the contract rather than guessing. Drawing this line explicitly is itself the senior distinction — a design system is a bounded, governed contract with a defined edge, not 'all the CSS in the file'.",
@@ -57,8 +81,8 @@
       "selector": ".product-card",
       "purpose": "Product summary card — media, title, description, price row, badge, CTA.",
       "slots": [".pmedia", ".pbody", "h3", ".pdesc", ".prow", ".price", ".price-was", ".badge"],
-      "tokensUsed": ["semantic-surface-card", "alias-radius-card", "alias-corner-shape", "alias-brand-300", "alias-brand-600", "alias-brand-700", "alias-brand-accent", "alias-device-angle", "semantic-font-display", "semantic-text-default", "semantic-text-soft", "semantic-badge-bg", "primitive-neutral-0", "primitive-neutral-400"],
-      "note": "price-was uses primitive-neutral-400 directly — a pre-existing exception for a struck-through/de-emphasised price, not a violation of the semantic-only rule since it never carries brand meaning. Flagged here so an agent doesn't treat it as a bug to 'fix'.",
+      "tokensUsed": ["semantic-surface-card", "alias-radius-card", "alias-corner-shape", "alias-brand-300", "alias-brand-600", "alias-brand-700", "alias-brand-accent", "alias-device-angle", "semantic-font-display", "semantic-text-default", "semantic-text-soft", "semantic-text-muted", "semantic-badge-bg", "semantic-on-control"],
+      "note": "price-was uses semantic-text-muted (scheme-remapped). Badge glyphs use semantic-on-control.",
       "variants": "none currently"
     },
     "btn": {
@@ -75,32 +99,33 @@
     "badge": {
       "selector": ".badge",
       "purpose": "Small status/label chip.",
-      "tokensUsed": ["alias-corner-shape", "semantic-badge-bg", "semantic-badge-new-bg", "primitive-neutral-0"],
+      "tokensUsed": ["alias-corner-shape", "semantic-badge-bg", "semantic-badge-new-bg", "semantic-on-control"],
       "variants": {
-        "badge-new": "background: semantic-badge-new-bg — fixed brand-agnostic violet (#7C3AED), deliberately outside all three brand palettes so a 'recently added' flag reads the same regardless of active brand. White text (primitive-neutral-0, inherited from .badge base) verified 5.70:1 against it — clears AA 4.5:1 for text."
+        "badge-new": "background: semantic-badge-new-bg — fixed brand-agnostic violet (#7C3AED), deliberately outside all three brand palettes so a 'recently added' flag reads the same regardless of active brand. White text (semantic-on-control) verified 5.70:1 against it — clears AA 4.5:1 for text."
       }
     },
     "toggle": {
       "selector": ".tg",
       "purpose": "Binary on/off control.",
-      "tokensUsed": ["alias-brand-200", "alias-brand-500"],
+      "tokensUsed": ["alias-brand-200", "alias-brand-500", "semantic-on-control"],
       "a11y": "uses aria-checked — correct pattern to follow for any new stateful control.",
       "variants": "none"
     },
     "checkbox-radio": {
       "selector": ".ctrl (.cb for checkbox, .rb for radio)",
       "purpose": "Shared base control, differentiated by modifier class — this is a second real variant precedent alongside btn.",
-      "tokensUsed": ["alias-brand-400", "alias-brand-500", "alias-radius-card", "alias-corner-shape", "primitive-neutral-0"],
+      "tokensUsed": ["alias-brand-400", "alias-brand-500", "alias-radius-card", "alias-corner-shape", "semantic-control-fill", "semantic-on-control"],
       "a11y": "uses aria-checked — correct."
     },
     "swatch": {
       "selector": ".swatch",
       "purpose": "Colour/pattern selector circle.",
+      "tokensUsed": ["alias-brand-700", "alias-brand-500", "alias-brand-300", "alias-brand-accent", "semantic-text-default"],
       "variants": "none currently"
     },
     "toast": {
       "selector": ".toast",
-      "status": "DONE — Phase 4, revised. Extended to 4 variants via modifier classes, matching the btn-primary/btn-secondary precedent. Base .toast/.tdot/.tprog i hold only structural rules (transparent placeholder border-left, colourless dot and bar); each variant binds the full feedback colour identity.",
+      "status": "DONE — Phase 4, revised. Extended to 4 variants via modifier classes, matching the btn-primary/btn-secondary precedent. Base .toast/.tdot/.tprog i hold only structural rules (transparent placeholder border-left, colourless dot and bar); each variant binds the full feedback colour identity. Surfaces/borders/text are scheme-remapped semantics — no primitive-neutral-* in component rules.",
       "slots": [".tclose", ".tprog", ".tdot", ".tbody"],
       "variants": {
         "toast-success": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-success",
@@ -108,8 +133,8 @@
         "toast-error": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-error",
         "toast-info": "border-left-color, .tdot background, and .tprog i fill: semantic-feedback-info"
       },
-      "tokensUsed": ["primitive-neutral-0", "alias-brand-200", "alias-brand-100", "semantic-feedback-success", "semantic-feedback-warning", "semantic-feedback-error", "semantic-feedback-info", "alias-radius-card", "alias-corner-shape", "semantic-focus", "primitive-neutral-400", "primitive-neutral-900", "semantic-font-body"],
-      "note": "The countdown progress bar (.tprog i) binds to the same state token as the border and dot, so a toast's full visual identity reflects its state — established convention (Carbon, React Toastify) ties the progress bar to notification intent. An earlier revision left the bar bound to success across all variants; design review caught it and it was corrected here."
+      "tokensUsed": ["semantic-surface-card", "semantic-border-subtle", "semantic-surface-inset", "semantic-text-default", "semantic-text-muted", "semantic-on-control", "semantic-feedback-success", "semantic-feedback-warning", "semantic-feedback-error", "semantic-feedback-info", "alias-radius-card", "alias-corner-shape", "semantic-focus", "semantic-font-body"],
+      "note": "The countdown progress bar (.tprog i) binds to the same state token as the border and dot, so a toast's full visual identity reflects its state — established convention (Carbon, React Toastify) ties the progress bar to notification intent."
     }
   }
 }

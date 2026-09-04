@@ -38,7 +38,7 @@ while ((m = ruleRe.exec(css)) !== null) {
   const selector = m[1].trim();
   const body = m[2];
   if (selector.startsWith('@') || selector.includes('@keyframes')) continue;
-  if (selector === ':root' || selector.startsWith('[data-brand')) continue; // token defs
+  if (selector === ':root' || selector.startsWith('[data-brand') || selector.startsWith('[data-scheme')) continue; // token defs
   if (!isGoverned(selector)) continue; // harness / scaffold — exempt by contract
 
   const hexHits = body.match(HEX_RE);
