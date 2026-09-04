@@ -190,66 +190,166 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .art-ember .a-jet{transform-box:view-box;transform-origin:100px 132px;
   animation:jet .52s ease-in-out infinite;animation-delay:1.2s}
-/* DEG · AI resolve: geometric system mark → official emblem */
+/* DEG · combination unlock → center morph → emblem builds */
 .art-deg{
   width:min(72%,270px);aspect-ratio:1;place-items:center;position:relative;
   filter:drop-shadow(0 16px 28px rgba(0,0,0,.35));
+  --deg-t:10.5s;
 }
-.art-deg .deg-layer{position:absolute;inset:0;display:grid;place-items:center}
-.art-deg .deg-geo{width:86%;height:auto}
+.art-deg .deg-lock{
+  position:absolute;inset:0;display:grid;place-items:center;
+  transform-style:preserve-3d;
+}
+.art-deg .deg-ring{
+  position:absolute;inset:0;display:grid;place-items:center;
+  transform-origin:50% 50%;
+  will-change:transform,opacity,filter;
+}
+.art-deg .deg-ring > i{
+  display:block;box-sizing:border-box;
+  border-style:solid;border-radius:2px;
+  background:transparent;
+}
+.art-deg .deg-ring-1 > i{
+  width:86%;aspect-ratio:1;
+  border-width:14px;border-color:var(--alias-brand-600);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--alias-brand-300), transparent 70%);
+}
+.art-deg .deg-ring-2 > i{
+  width:68%;aspect-ratio:1;
+  border-width:12px;border-color:var(--semantic-art-base);
+}
+.art-deg .deg-ring-3 > i{
+  width:50%;aspect-ratio:1;
+  border-width:11px;border-color:var(--alias-brand-300);
+}
+.art-deg .deg-ring-4 > i{
+  width:28%;aspect-ratio:1;
+  border:0;border-radius:2px;
+  background:var(--alias-brand-700);
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--alias-brand-accent), transparent 55%);
+}
+.art-deg .deg-bar{
+  position:absolute;left:50%;bottom:12%;
+  width:62%;height:7px;margin-left:-31%;
+  background:var(--alias-brand-accent);border-radius:1px;
+  transform-origin:50% 50%;
+  will-change:transform,opacity;
+}
+.art-deg .deg-bloom{
+  position:absolute;width:22%;aspect-ratio:1;border-radius:50%;
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--alias-brand-accent), transparent 10%) 0%,
+      color-mix(in srgb, var(--alias-brand-300), transparent 35%) 42%,
+      transparent 72%);
+  opacity:0;pointer-events:none;filter:blur(2px);
+  mix-blend-mode:screen;
+}
 .art-deg .deg-emblem{
-  width:78%;height:78%;object-fit:contain;object-position:center;
-  opacity:0;will-change:opacity,transform,filter;
+  position:absolute;width:78%;height:78%;object-fit:contain;object-position:center;
+  opacity:0;will-change:opacity,transform,clip-path,filter;
 }
-.art-deg .deg-scan{
-  position:absolute;left:8%;right:8%;height:18%;
-  background:linear-gradient(180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--alias-brand-accent), transparent 55%) 45%,
-    color-mix(in srgb, var(--alias-brand-300), transparent 35%) 55%,
-    transparent 100%);
-  opacity:0;pointer-events:none;mix-blend-mode:screen;
-  filter:blur(0.5px);
+/* Phase A — counter-rotating lock tumblers */
+@keyframes degTumbler1{
+  0%,4%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
+  12%{transform:rotate(38deg) scale(1)}
+  22%{transform:rotate(-12deg) scale(1)}
+  32%{transform:rotate(56deg) scale(1)}
+  42%{transform:rotate(0deg) scale(1);opacity:1}
+  52%{transform:rotate(0deg) scale(.55);opacity:.85;filter:blur(1px)}
+  60%{transform:rotate(90deg) scale(.08);opacity:0;filter:blur(6px)}
+  60.01%,90%{transform:rotate(90deg) scale(0);opacity:0}
+  100%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
 }
-.art-deg .deg-grid{
-  position:absolute;inset:12%;
-  background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--alias-brand-300), transparent 70%) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--alias-brand-300), transparent 70%) 1px, transparent 1px);
-  background-size:12px 12px;
-  opacity:0;mask-image:radial-gradient(circle at 50% 50%, #000 35%, transparent 78%);
-  -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 35%, transparent 78%);
-  pointer-events:none;
+@keyframes degTumbler2{
+  0%,4%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
+  12%{transform:rotate(-48deg) scale(1)}
+  22%{transform:rotate(24deg) scale(1)}
+  32%{transform:rotate(-70deg) scale(1)}
+  42%{transform:rotate(0deg) scale(1);opacity:1}
+  52%{transform:rotate(0deg) scale(.42);opacity:.8;filter:blur(1.5px)}
+  60%{transform:rotate(-120deg) scale(.06);opacity:0;filter:blur(7px)}
+  60.01%,90%{transform:rotate(-120deg) scale(0);opacity:0}
+  100%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
 }
-@keyframes degGeoResolve{
-  0%,10%{opacity:1;transform:scale(1) rotate(0deg);filter:blur(0) brightness(1)}
-  24%{opacity:.55;transform:scale(.94) rotate(2deg);filter:blur(0) brightness(1.15)}
-  36%{opacity:0;transform:scale(.62) rotate(12deg);filter:blur(8px) brightness(1.6)}
-  36.01%,86%{opacity:0;transform:scale(.62)}
-  100%{opacity:1;transform:scale(1) rotate(0deg);filter:blur(0) brightness(1)}
+@keyframes degTumbler3{
+  0%,4%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
+  12%{transform:rotate(62deg) scale(1)}
+  22%{transform:rotate(-34deg) scale(1)}
+  32%{transform:rotate(88deg) scale(1)}
+  42%{transform:rotate(0deg) scale(1);opacity:1}
+  52%{transform:rotate(0deg) scale(.3);opacity:.75;filter:blur(2px)}
+  60%{transform:rotate(160deg) scale(.04);opacity:0;filter:blur(8px)}
+  60.01%,90%{transform:rotate(160deg) scale(0);opacity:0}
+  100%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
 }
-@keyframes degEmblemResolve{
-  0%,26%{opacity:0;transform:scale(.9);filter:blur(12px) brightness(1.8)}
-  40%{opacity:1;transform:scale(1.02);filter:blur(0) brightness(1.05)}
-  48%,76%{opacity:1;transform:scale(1);filter:none}
-  90%,100%{opacity:0;transform:scale(1.05);filter:blur(10px) brightness(1.4)}
+@keyframes degTumbler4{
+  0%,4%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
+  12%{transform:rotate(-28deg) scale(1)}
+  22%{transform:rotate(46deg) scale(1)}
+  32%{transform:rotate(-95deg) scale(1)}
+  42%{transform:rotate(0deg) scale(1);opacity:1}
+  52%{transform:rotate(0deg) scale(.18);opacity:.9;filter:blur(1px) brightness(1.4)}
+  58%{transform:rotate(0deg) scale(1.15);opacity:1;filter:blur(0) brightness(1.8)}
+  63%{transform:rotate(0deg) scale(0);opacity:0;filter:blur(10px)}
+  63.01%,90%{opacity:0;transform:scale(0)}
+  100%{transform:rotate(0deg) scale(1);opacity:1;filter:none}
 }
-@keyframes degScanSweep{
-  0%,14%{transform:translateY(-130%);opacity:0}
-  18%{opacity:.95}
-  34%{transform:translateY(130%);opacity:0}
-  100%{opacity:0}
+@keyframes degBarUnlock{
+  0%,4%{transform:rotate(0deg) scaleX(1);opacity:1}
+  12%{transform:rotate(-38deg) scaleX(1)}
+  22%{transform:rotate(18deg) scaleX(.95)}
+  32%{transform:rotate(-50deg) scaleX(1)}
+  42%{transform:rotate(0deg) scaleX(1);opacity:1}
+  52%{transform:rotate(0deg) scaleX(.35) translateY(-28px);opacity:.7}
+  58%{transform:rotate(0deg) scaleX(0) translateY(-48px);opacity:0}
+  58.01%,90%{opacity:0}
+  100%{transform:rotate(0deg) scaleX(1);opacity:1}
 }
-@keyframes degGridPulse{
-  0%,16%{opacity:0}
-  24%{opacity:.55}
-  38%{opacity:.15}
-  48%,100%{opacity:0}
+/* Phase B — layers collapse into a center bloom */
+@keyframes degBloom{
+  0%,48%{opacity:0;transform:scale(.15)}
+  54%{opacity:1;transform:scale(1.05)}
+  60%{opacity:.85;transform:scale(1.85)}
+  66%{opacity:0;transform:scale(2.6)}
+  100%{opacity:0;transform:scale(.15)}
 }
-.art-deg .deg-geo{animation:degGeoResolve 8.5s var(--ease-reveal) infinite}
-.art-deg .deg-emblem{animation:degEmblemResolve 8.5s var(--ease-reveal) infinite}
-.art-deg .deg-scan{animation:degScanSweep 8.5s var(--ease-reveal) infinite}
-.art-deg .deg-grid{animation:degGridPulse 8.5s var(--ease-reveal) infinite}
+/* Phase C — emblem builds outward from the unlocked core */
+@keyframes degEmblemBuild{
+  0%,56%{
+    opacity:0;transform:scale(.55);
+    clip-path:circle(0% at 50% 50%);
+    filter:blur(10px) brightness(1.6);
+  }
+  62%{
+    opacity:1;transform:scale(.82);
+    clip-path:circle(14% at 50% 50%);
+    filter:blur(2px) brightness(1.2);
+  }
+  72%{
+    opacity:1;transform:scale(1);
+    clip-path:circle(58% at 50% 50%);
+    filter:blur(0) brightness(1);
+  }
+  78%,88%{
+    opacity:1;transform:scale(1);
+    clip-path:circle(80% at 50% 50%);
+    filter:none;
+  }
+  95%,100%{
+    opacity:0;transform:scale(1.04);
+    clip-path:circle(80% at 50% 50%);
+    filter:blur(8px);
+  }
+}
+.art-deg .deg-ring-1{animation:degTumbler1 var(--deg-t) cubic-bezier(.4,.0,.2,1) infinite}
+.art-deg .deg-ring-2{animation:degTumbler2 var(--deg-t) cubic-bezier(.4,.0,.2,1) infinite}
+.art-deg .deg-ring-3{animation:degTumbler3 var(--deg-t) cubic-bezier(.4,.0,.2,1) infinite}
+.art-deg .deg-ring-4{animation:degTumbler4 var(--deg-t) cubic-bezier(.34,1.2,.4,1) infinite}
+.art-deg .deg-bar{animation:degBarUnlock var(--deg-t) cubic-bezier(.4,.0,.2,1) infinite}
+.art-deg .deg-bloom{animation:degBloom var(--deg-t) var(--ease-reveal) infinite}
+.art-deg .deg-emblem{animation:degEmblemBuild var(--deg-t) var(--ease-reveal) infinite}
 /* motion: one content role, one entrance — from the portable motion system */
 @keyframes revHeadline{from{opacity:0;transform:translateY(10px) scale(.975)}to{opacity:1;transform:none}}
 @keyframes revBody{from{opacity:0;transform:translateY(var(--dist-text))}to{opacity:1;transform:none}}
@@ -485,7 +585,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
 }
 .audit-chip .ct{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8E90;margin-bottom:2px}
 .audit-chip .cd{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4AC8E8}
-@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .art-deg .deg-geo,.art-deg .deg-scan,.art-deg .deg-grid{opacity:0!important} .art-deg .deg-emblem{opacity:1!important;transform:none!important;filter:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} .image-hero .media svg.art > *,.rv-headline,.rv-body,.rv-pop{opacity:1!important;transform:none!important} .toast .tprog i{animation:none!important;transform:scaleX(.55)!important} .ramp .step,.sbar i,.tscale > div{opacity:1!important;transform:none!important} .art-aurora .a-lift,.art-ember .a-jet{animation:none!important} .art-deg .deg-ring,.art-deg .deg-bar,.art-deg .deg-bloom{opacity:0!important} .art-deg .deg-emblem{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important} .pmedia svg,.pmedia svg *,.cta-section .pattern *{transition:none!important} .chrome-head,.chrome-head .mark,.chrome-head .lbl{transition:none!important} .audit-bar-head .pulse{animation:none!important} }
 </style>
 </head>
 <body>
@@ -540,21 +640,15 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
               <g><path class="a-jet a-acc" d="M94 132 L106 132 L100 158 Z"/></g>
             </svg>
             <div class="art art-deg" aria-hidden="true">
-              <div class="deg-layer">
-                <svg class="deg-geo" viewBox="0 0 200 200">
-                  <!-- structured system mark — resolves into the official emblem -->
-                  <rect class="a-deep" x="36" y="36" width="128" height="128"/>
-                  <rect class="a-main" x="52" y="52" width="96" height="96"/>
-                  <rect class="a-mid"  x="68" y="68" width="64" height="64"/>
-                  <rect class="a-deep" x="84" y="84" width="32" height="32"/>
-                  <rect class="a-acc"  x="52" y="148" width="96" height="8"/>
-                </svg>
+              <div class="deg-lock">
+                <div class="deg-ring deg-ring-1"><i></i></div>
+                <div class="deg-ring deg-ring-2"><i></i></div>
+                <div class="deg-ring deg-ring-3"><i></i></div>
+                <div class="deg-ring deg-ring-4"><i></i></div>
+                <div class="deg-bar"></div>
               </div>
-              <div class="deg-layer deg-grid" aria-hidden="true"></div>
-              <div class="deg-layer"><div class="deg-scan"></div></div>
-              <div class="deg-layer">
-                <img class="deg-emblem" src="assets/dge-emblem.svg" alt="" width="200" height="200" decoding="async">
-              </div>
+              <div class="deg-bloom" aria-hidden="true"></div>
+              <img class="deg-emblem" src="assets/dge-emblem.svg" alt="" width="200" height="200" decoding="async">
             </div>
           </div>
         </section>
@@ -982,7 +1076,7 @@ body{background:#0A0B0C;color:#F5F5F5;font-family:'Poppins',system-ui,sans-serif
     });
     refresh();
     document.querySelectorAll('.chain').forEach(c=>{c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse');});
-    document.querySelectorAll('.image-hero .media svg.art > *, .art-deg .deg-geo, .art-deg .deg-emblem, .art-deg .deg-scan, .art-deg .deg-grid, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
+    document.querySelectorAll('.image-hero .media svg.art > *, .art-deg .deg-ring, .art-deg .deg-bar, .art-deg .deg-bloom, .art-deg .deg-emblem, .rv-headline, .rv-body, .rv-pop, .is-revealed .ramp .step, .is-revealed .sbar i, .is-revealed .tscale > div').forEach(el=>{
       el.style.animation='none'; void el.offsetWidth; el.style.animation='';
     });
   }
